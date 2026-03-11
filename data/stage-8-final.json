@@ -1,0 +1,21 @@
+{
+  "stage": "Final",
+  "stageId": 8,
+  "matches": [
+    {
+      "home": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    }
+  ]
+}

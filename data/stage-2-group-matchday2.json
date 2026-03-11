@@ -1,0 +1,824 @@
+{
+  "stage": "Group Stage - Matchday 2",
+  "stageId": 2,
+  "matches": [
+    {
+      "home": {
+        "id": "UEFA_PO_A",
+        "name": "DEN/ MKD/ CZE/ IRL",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "RSA",
+        "name": "South Africa",
+        "flag": "🇿🇦"
+      },
+      "homeScore": 1,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "MEX",
+        "name": "Mexico",
+        "flag": "🇲🇽"
+      },
+      "away": {
+        "id": "KOR",
+        "name": "Korea Republic",
+        "flag": "🇰🇷"
+      },
+      "homeScore": 2,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "SUI",
+        "name": "Switzerland",
+        "flag": "🇨🇭"
+      },
+      "away": {
+        "id": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️"
+      },
+      "homeScore": 1,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "CAN",
+        "name": "Canada",
+        "flag": "🇨🇦"
+      },
+      "away": {
+        "id": "QAT",
+        "name": "Qatar",
+        "flag": "🇶🇦"
+      },
+      "homeScore": 0,
+      "awayScore": 0,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "SCO",
+        "name": "Scotland",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+      },
+      "away": {
+        "id": "MAR",
+        "name": "Morocco",
+        "flag": "🇲🇦"
+      },
+      "homeScore": 3,
+      "awayScore": 2,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "BRA",
+        "name": "Brazil",
+        "flag": "🇧🇷"
+      },
+      "away": {
+        "id": "HAI",
+        "name": "Haiti",
+        "flag": "🇭🇹"
+      },
+      "homeScore": 2,
+      "awayScore": 1,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "USA",
+        "name": "USA",
+        "flag": "🇺🇸"
+      },
+      "away": {
+        "id": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "homeScore": 0,
+      "awayScore": 0,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "UEFA_PO_D",
+        "name": "TUR/ ROU/ SVK/ KOS",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "PAR",
+        "name": "Paraguay",
+        "flag": "🇵🇾"
+      },
+      "homeScore": 3,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "GER",
+        "name": "Germany",
+        "flag": "🇩🇪"
+      },
+      "away": {
+        "id": "CIV",
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮"
+      },
+      "homeScore": 2,
+      "awayScore": 2,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨"
+      },
+      "away": {
+        "id": "CUW",
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "NED",
+        "name": "Netherlands",
+        "flag": "🇳🇱"
+      },
+      "away": {
+        "id": "UEFA_PO_C",
+        "name": "UKR/ SWE/ POL/ ALB",
+        "flag": "🏳️"
+      },
+      "homeScore": 2,
+      "awayScore": 2,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "TUN",
+        "name": "Tunisia",
+        "flag": "🇹🇳"
+      },
+      "away": {
+        "id": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "BEL",
+        "name": "Belgium",
+        "flag": "🇧🇪"
+      },
+      "away": {
+        "id": "IRN",
+        "name": "Iran",
+        "flag": "🇮🇷"
+      },
+      "homeScore": 3,
+      "awayScore": 2,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "NZL",
+        "name": "New Zealand",
+        "flag": "🇳🇿"
+      },
+      "away": {
+        "id": "EGY",
+        "name": "Egypt",
+        "flag": "🇪🇬"
+      },
+      "homeScore": 0,
+      "awayScore": 0,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "ESP",
+        "name": "Spain",
+        "flag": "🇪🇸"
+      },
+      "away": {
+        "id": "SAU",
+        "name": "Saudi Arabia",
+        "flag": "🇸🇦"
+      },
+      "homeScore": 3,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "URY",
+        "name": "Uruguay",
+        "flag": "🇺🇾"
+      },
+      "away": {
+        "id": "CPV",
+        "name": "Cabo Verde",
+        "flag": "🇨🇻"
+      },
+      "homeScore": 1,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "FRA",
+        "name": "France",
+        "flag": "🇫🇷"
+      },
+      "away": {
+        "id": "INT_PO_A",
+        "name": "BOL/ SUR/ IRQ",
+        "flag": "🏳️"
+      },
+      "homeScore": 2,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "NOR",
+        "name": "Norway",
+        "flag": "🇳🇴"
+      },
+      "away": {
+        "id": "SEN",
+        "name": "Senegal",
+        "flag": "🇸🇳"
+      },
+      "homeScore": 1,
+      "awayScore": 1,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "ARG",
+        "name": "Argentina",
+        "flag": "🇦🇷"
+      },
+      "away": {
+        "id": "AUT",
+        "name": "Austria",
+        "flag": "🇦🇹"
+      },
+      "homeScore": 1,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "JOR",
+        "name": "Jordan",
+        "flag": "🇯🇴"
+      },
+      "away": {
+        "id": "ALG",
+        "name": "Algeria",
+        "flag": "🇩🇿"
+      },
+      "homeScore": 0,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "POR",
+        "name": "Portugal",
+        "flag": "🇵🇹"
+      },
+      "away": {
+        "id": "UZB",
+        "name": "Uzbekistan",
+        "flag": "🇺🇿"
+      },
+      "homeScore": 3,
+      "awayScore": 1,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "COL",
+        "name": "Colombia",
+        "flag": "🇨🇴"
+      },
+      "away": {
+        "id": "INT_PO_B",
+        "name": "NCL/ JAM/ COD",
+        "flag": "🏳️"
+      },
+      "homeScore": 2,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "ENG",
+        "name": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "away": {
+        "id": "GHA",
+        "name": "Ghana",
+        "flag": "🇬🇭"
+      },
+      "homeScore": 0,
+      "awayScore": 0,
+      "winner": "draw"
+    },
+    {
+      "home": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    }
+  ],
+  "groupStandings": {
+    "A": [
+      {
+        "teamId": "MEX",
+        "name": "Mexico",
+        "flag": "🇲🇽",
+        "wins": 2,
+        "draws": 0,
+        "losses": 0,
+        "points": 6
+      },
+      {
+        "teamId": "RSA",
+        "name": "South Africa",
+        "flag": "🇿🇦",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "KOR",
+        "name": "Korea Republic",
+        "flag": "🇰🇷",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "UEFA_PO_A",
+        "name": "DEN/ MKD/ CZE/ IRL",
+        "flag": "🏳️",
+        "wins": 0,
+        "draws": 0,
+        "losses": 2,
+        "points": 0
+      }
+    ],
+    "B": [
+      {
+        "teamId": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "QAT",
+        "name": "Qatar",
+        "flag": "🇶🇦",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "CAN",
+        "name": "Canada",
+        "flag": "🇨🇦",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "SUI",
+        "name": "Switzerland",
+        "flag": "🇨🇭",
+        "wins": 0,
+        "draws": 0,
+        "losses": 2,
+        "points": 0
+      }
+    ],
+    "C": [
+      {
+        "teamId": "BRA",
+        "name": "Brazil",
+        "flag": "🇧🇷",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "HAI",
+        "name": "Haiti",
+        "flag": "🇭🇹",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "SCO",
+        "name": "Scotland",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "MAR",
+        "name": "Morocco",
+        "flag": "🇲🇦",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "D": [
+      {
+        "teamId": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "UEFA_PO_D",
+        "name": "TUR/ ROU/ SVK/ KOS",
+        "flag": "🏳️",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "USA",
+        "name": "USA",
+        "flag": "🇺🇸",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "PAR",
+        "name": "Paraguay",
+        "flag": "🇵🇾",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "E": [
+      {
+        "teamId": "CUW",
+        "name": "Curaçao",
+        "flag": "🇨🇼",
+        "wins": 2,
+        "draws": 0,
+        "losses": 0,
+        "points": 6
+      },
+      {
+        "teamId": "CIV",
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "GER",
+        "name": "Germany",
+        "flag": "🇩🇪",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      },
+      {
+        "teamId": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨",
+        "wins": 0,
+        "draws": 0,
+        "losses": 2,
+        "points": 0
+      }
+    ],
+    "F": [
+      {
+        "teamId": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "TUN",
+        "name": "Tunisia",
+        "flag": "🇹🇳",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "NED",
+        "name": "Netherlands",
+        "flag": "🇳🇱",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "UEFA_PO_C",
+        "name": "UKR/ SWE/ POL/ ALB",
+        "flag": "🏳️",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "G": [
+      {
+        "teamId": "BEL",
+        "name": "Belgium",
+        "flag": "🇧🇪",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "EGY",
+        "name": "Egypt",
+        "flag": "🇪🇬",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "NZL",
+        "name": "New Zealand",
+        "flag": "🇳🇿",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "IRN",
+        "name": "Iran",
+        "flag": "🇮🇷",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "H": [
+      {
+        "teamId": "ESP",
+        "name": "Spain",
+        "flag": "🇪🇸",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "URY",
+        "name": "Uruguay",
+        "flag": "🇺🇾",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "CPV",
+        "name": "Cabo Verde",
+        "flag": "🇨🇻",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      },
+      {
+        "teamId": "SAU",
+        "name": "Saudi Arabia",
+        "flag": "🇸🇦",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "I": [
+      {
+        "teamId": "NOR",
+        "name": "Norway",
+        "flag": "🇳🇴",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "INT_PO_A",
+        "name": "BOL/ SUR/ IRQ",
+        "flag": "🏳️",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "SEN",
+        "name": "Senegal",
+        "flag": "🇸🇳",
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "points": 2
+      },
+      {
+        "teamId": "FRA",
+        "name": "France",
+        "flag": "🇫🇷",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "J": [
+      {
+        "teamId": "ALG",
+        "name": "Algeria",
+        "flag": "🇩🇿",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "AUT",
+        "name": "Austria",
+        "flag": "🇦🇹",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "ARG",
+        "name": "Argentina",
+        "flag": "🇦🇷",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      },
+      {
+        "teamId": "JOR",
+        "name": "Jordan",
+        "flag": "🇯🇴",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ],
+    "K": [
+      {
+        "teamId": "POR",
+        "name": "Portugal",
+        "flag": "🇵🇹",
+        "wins": 2,
+        "draws": 0,
+        "losses": 0,
+        "points": 6
+      },
+      {
+        "teamId": "COL",
+        "name": "Colombia",
+        "flag": "🇨🇴",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "UZB",
+        "name": "Uzbekistan",
+        "flag": "🇺🇿",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      },
+      {
+        "teamId": "INT_PO_B",
+        "name": "NCL/ JAM/ COD",
+        "flag": "🏳️",
+        "wins": 0,
+        "draws": 0,
+        "losses": 2,
+        "points": 0
+      }
+    ],
+    "L": [
+      {
+        "teamId": "ENG",
+        "name": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "wins": 1,
+        "draws": 1,
+        "losses": 0,
+        "points": 4
+      },
+      {
+        "teamId": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "points": 3
+      },
+      {
+        "teamId": "GHA",
+        "name": "Ghana",
+        "flag": "🇬🇭",
+        "wins": 0,
+        "draws": 1,
+        "losses": 1,
+        "points": 1
+      }
+    ]
+  }
+}

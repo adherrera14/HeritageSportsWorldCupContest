@@ -1,0 +1,246 @@
+{
+  "stage": "Round of 32",
+  "stageId": 4,
+  "matches": [
+    {
+      "home": {
+        "id": "POR",
+        "name": "Portugal",
+        "flag": "🇵🇹"
+      },
+      "away": {
+        "id": "SUI",
+        "name": "Switzerland",
+        "flag": "🇨🇭"
+      },
+      "homeScore": 1,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "ALG",
+        "name": "Algeria",
+        "flag": "🇩🇿"
+      },
+      "away": {
+        "id": "NED",
+        "name": "Netherlands",
+        "flag": "🇳🇱"
+      },
+      "homeScore": 1,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "BEL",
+        "name": "Belgium",
+        "flag": "🇧🇪"
+      },
+      "away": {
+        "id": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "CIV",
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮"
+      },
+      "away": {
+        "id": "UZB",
+        "name": "Uzbekistan",
+        "flag": "🇺🇿"
+      },
+      "homeScore": 3,
+      "awayScore": 2,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "MEX",
+        "name": "Mexico",
+        "flag": "🇲🇽"
+      },
+      "away": {
+        "id": "TUN",
+        "name": "Tunisia",
+        "flag": "🇹🇳"
+      },
+      "homeScore": 3,
+      "awayScore": 4,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "NOR",
+        "name": "Norway",
+        "flag": "🇳🇴"
+      },
+      "away": {
+        "id": "ESP",
+        "name": "Spain",
+        "flag": "🇪🇸"
+      },
+      "homeScore": 0,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "URY",
+        "name": "Uruguay",
+        "flag": "🇺🇾"
+      },
+      "away": {
+        "id": "RSA",
+        "name": "South Africa",
+        "flag": "🇿🇦"
+      },
+      "homeScore": 1,
+      "awayScore": 2,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "INT_PO_A",
+        "name": "BOL/ SUR/ IRQ",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "CUW",
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "away": {
+        "id": "MAR",
+        "name": "Morocco",
+        "flag": "🇲🇦"
+      },
+      "homeScore": 3,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "SCO",
+        "name": "Scotland",
+        "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿"
+      },
+      "away": {
+        "id": "KOR",
+        "name": "Korea Republic",
+        "flag": "🇰🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "UEFA_PO_D",
+        "name": "TUR/ ROU/ SVK/ KOS",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 1,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "away": {
+        "id": "COL",
+        "name": "Colombia",
+        "flag": "🇨🇴"
+      },
+      "homeScore": 3,
+      "awayScore": 2,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "EGY",
+        "name": "Egypt",
+        "flag": "🇪🇬"
+      },
+      "away": {
+        "id": "CPV",
+        "name": "Cabo Verde",
+        "flag": "🇨🇻"
+      },
+      "homeScore": 3,
+      "awayScore": 1,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "ENG",
+        "name": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "away": {
+        "id": "BRA",
+        "name": "Brazil",
+        "flag": "🇧🇷"
+      },
+      "homeScore": 2,
+      "awayScore": 1,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "AUT",
+        "name": "Austria",
+        "flag": "🇦🇹"
+      },
+      "homeScore": 2,
+      "awayScore": 1,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵"
+      },
+      "away": {
+        "id": "QAT",
+        "name": "Qatar",
+        "flag": "🇶🇦"
+      },
+      "homeScore": 1,
+      "awayScore": 0,
+      "winner": "home"
+    }
+  ]
+}

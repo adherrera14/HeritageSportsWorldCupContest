@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Sports - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <div class="min-h-screen p-4">
+        <div class="max-w-2xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold mb-2">Admin Panel</h1>
+                <p class="text-gray-400">Simulate tournament progression</p>
+                <button id="reset-picks-btn" class="inline-flex mt-4 bg-red-700 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-lg border border-red-500 transition">
+                    Reset User Picks
+                </button>
+            </div>
+
+            <!-- Current Stage Display -->
+            <div class="bg-gray-800 rounded-lg p-6 mb-8 border border-gray-700">
+                <p class="text-gray-400 text-sm mb-2">Current Tournament Stage</p>
+                <h2 class="text-2xl font-bold text-yellow-500 mb-4" id="currentStageDisplay">Pre-Tournament</h2>
+                <p class="text-gray-400 text-sm" id="currentStageDescription">No matches have been played yet.</p>
+            </div>
+
+            <!-- Stage Selection Buttons -->
+            <div class="space-y-4 mb-8">
+                <h3 class="text-xl font-bold mb-4">Select Tournament Stage</h3>
+                
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="0">
+                    <span class="font-bold text-lg">🏁 Pre-Tournament</span>
+                    <p class="text-gray-400 text-sm">Before matches begin</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="1">
+                    <span class="font-bold text-lg">⚽ Group Stage - Matchday 1</span>
+                    <p class="text-gray-400 text-sm">First round of group matches</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="2">
+                    <span class="font-bold text-lg">⚽ Group Stage - Matchday 2</span>
+                    <p class="text-gray-400 text-sm">Second round of group matches</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="3">
+                    <span class="font-bold text-lg">⚽ Group Stage - Matchday 3</span>
+                    <p class="text-gray-400 text-sm">Final round of group matches</p>
+                </button>
+
+                <div class="border-t border-gray-700 my-4"></div>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="4">
+                    <span class="font-bold text-lg">🔥 Round of 32</span>
+                    <p class="text-gray-400 text-sm">32 teams compete for advancement</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="5">
+                    <span class="font-bold text-lg">🏆 Round of 16</span>
+                    <p class="text-gray-400 text-sm">16 teams compete for advancement</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="6">
+                    <span class="font-bold text-lg">⚔️ Quarterfinal</span>
+                    <p class="text-gray-400 text-sm">8 teams compete for the semifinals</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="7">
+                    <span class="font-bold text-lg">👑 Semifinal</span>
+                    <p class="text-gray-400 text-sm">4 teams compete for the final</p>
+                </button>
+
+                <button class="stage-btn w-full bg-gray-700 hover:bg-gray-600 text-left p-4 rounded-lg border border-gray-600 transition" data-stage="8">
+                    <span class="font-bold text-lg">🥇 Final</span>
+                    <p class="text-gray-400 text-sm">Crowning the World Cup champion</p>
+                </button>
+            </div>
+
+            <!-- Info Section -->
+            <div class="bg-blue-900 text-blue-100 p-4 rounded-lg border border-blue-700">
+                <h4 class="font-bold mb-2">💡 How it works</h4>
+                <ul class="text-sm space-y-2">
+                    <li>1. Select a tournament stage using the buttons above</li>
+                    <li>2. The stage will be saved to your browser (LocalStorage)</li>
+                    <li>3. Visit the main contest page to see updated matches and scores</li>
+                    <li>4. Your points will be calculated based on your team rankings</li>
+                    <li>5. Use this to simulate the tournament progressing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'wc2026_current_stage';
+        const USER_RANKINGS_KEY = 'wc2026_user_rankings';
+        const RANKINGS_LOCKED_KEY = 'wc2026_rankings_locked';
+        
+        // Load current stage on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedStage = localStorage.getItem(STORAGE_KEY);
+            if (savedStage) {
+                updateCurrentStageDisplay(parseInt(savedStage));
+                highlightButton(parseInt(savedStage));
+            }
+        });
+
+        // Setup stage buttons
+        document.querySelectorAll('.stage-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const stage = parseInt(button.getAttribute('data-stage'));
+                setCurrentStage(stage);
+            });
+        });
+
+        const resetPicksBtn = document.getElementById('reset-picks-btn');
+        if (resetPicksBtn) {
+            resetPicksBtn.addEventListener('click', resetUserPicks);
+        }
+
+        function setCurrentStage(stageId) {
+            localStorage.setItem(STORAGE_KEY, stageId);
+            updateCurrentStageDisplay(stageId);
+            highlightButton(stageId);
+            
+            // Show confirmation
+            showConfirmation(`Stage set to ${getStageLabel(stageId)}`);
+        }
+
+        function resetUserPicks() {
+            const confirmed = window.confirm('Reset all user picks and unlock rankings? This also returns the tournament to Pre-Tournament stage.');
+            if (!confirmed) {
+                return;
+            }
+
+            localStorage.removeItem(USER_RANKINGS_KEY);
+            localStorage.removeItem(RANKINGS_LOCKED_KEY);
+            setCurrentStage(0);
+            showConfirmation('User picks reset. Contest is back to Pre-Tournament.');
+        }
+
+        function updateCurrentStageDisplay(stageId) {
+            const stageDisplay = document.getElementById('currentStageDisplay');
+            const stageDescription = document.getElementById('currentStageDescription');
+            
+            stageDisplay.textContent = getStageLabel(stageId);
+            stageDescription.textContent = getStageDescription(stageId);
+        }
+
+        function highlightButton(stageId) {
+            document.querySelectorAll('.stage-btn').forEach(btn => {
+                btn.classList.remove('bg-yellow-700', 'border-yellow-500');
+                btn.classList.add('bg-gray-700', 'border-gray-600');
+            });
+            
+            const activeBtn = document.querySelector(`[data-stage="${stageId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-gray-700', 'border-gray-600');
+                activeBtn.classList.add('bg-yellow-700', 'border-yellow-500');
+            }
+        }
+
+        function getStageLabel(stageId) {
+            const labels = [
+                '🏁 Pre-Tournament',
+                '⚽ Group Stage - Matchday 1',
+                '⚽ Group Stage - Matchday 2',
+                '⚽ Group Stage - Matchday 3',
+                '🔥 Round of 32',
+                '🏆 Round of 16',
+                '⚔️ Quarterfinal',
+                '👑 Semifinal',
+                '🥇 Final'
+            ];
+            return labels[stageId] || 'Unknown Stage';
+        }
+
+        function getStageDescription(stageId) {
+            const descriptions = [
+                'No matches have been played yet.',
+                'First round of group matches - users can begin earning points.',
+                'Second round of group matches - rankings progress.',
+                'Final round of group matches - group winners determined.',
+                '32 teams compete in knockout matches.',
+                '16 teams advance to the Round of 16.',
+                '8 teams compete for the semifinals.',
+                '4 teams compete for the championship.',
+                'The two finalists battle for the World Cup trophy.'
+            ];
+            return descriptions[stageId] || 'Unknown description';
+        }
+
+        function showConfirmation(message) {
+            const confirmation = document.createElement('div');
+            confirmation.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg font-bold shadow-lg';
+            confirmation.textContent = '✓ ' + message;
+            document.body.appendChild(confirmation);
+            
+            setTimeout(() => {
+                confirmation.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

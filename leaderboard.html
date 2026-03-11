@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heritage Sports - Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="text-white">
+  <div class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-4 py-6">
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold">Top 20 Leaderboard</h1>
+      <p class="text-gray-400 mt-1">Standalone leaderboard page for contest rankings.</p>
+      <div class="mt-3 inline-flex items-center gap-2 bg-gray-800 border border-gray-700 rounded-full px-3 py-1">
+        <span class="text-xs uppercase tracking-wide text-gray-400">Stage</span>
+        <span id="current-stage-badge" class="text-sm font-semibold text-yellow-400">Pre-Tournament</span>
+      </div>
+    </header>
+
+    <main>
+      <div id="leaderboard-content" class="card">
+        <p class="text-gray-400">Loading leaderboard...</p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      USER_RANKINGS: 'wc2026_user_rankings',
+      RANKINGS_LOCKED: 'wc2026_rankings_locked',
+      CURRENT_STAGE: 'wc2026_current_stage'
+    };
+
+    const STAGE_FILENAMES = [
+      'pre-tournament',
+      'group-matchday1',
+      'group-matchday2',
+      'group-matchday3',
+      'round32',
+      'round16',
+      'quarterfinal',
+      'semifinal',
+      'final'
+    ];
+
+    function createSeededRng(seedString) {
+      let seed = 0;
+      for (let i = 0; i < seedString.length; i++) {
+        seed = (seed * 31 + seedString.charCodeAt(i)) >>> 0;
+      }
+
+      return () => {
+        seed = (1664525 * seed + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+    }
+
+    function generateMockRankingMap(teamIds, seedLabel) {
+      const rng = createSeededRng(seedLabel);
+      const ids = [...teamIds];
+      const values = Array.from({ length: teamIds.length }, (_, i) => i + 1);
+
+      for (let i = ids.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [ids[i], ids[j]] = [ids[j], ids[i]];
+      }
+
+      const map = {};
+      ids.forEach((id, idx) => {
+        map[id] = values[idx];
+      });
+
+      return map;
+    }
+
+    function calculateScoreForRankings(rankings, stageDataList) {
+      let score = 0;
+
+      stageDataList.forEach((stageData) => {
+        if (!stageData || !Array.isArray(stageData.matches)) {
+          return;
+        }
+
+        stageData.matches.forEach((match) => {
+          if (match.winner === 'home') {
+            score += rankings[match.home.id] || 0;
+          }
+          if (match.winner === 'away') {
+            score += rankings[match.away.id] || 0;
+          }
+        });
+      });
+
+      return score;
+    }
+
+    async function loadStageDataUpTo(currentStage) {
+      const result = [];
+
+      for (let stageId = 1; stageId <= currentStage; stageId++) {
+        const filename = `data/stage-${stageId}-${STAGE_FILENAMES[stageId]}.json`;
+        const response = await fetch(filename);
+        if (!response.ok) {
+          throw new Error(`Failed to load ${filename}`);
+        }
+        result.push(await response.json());
+      }
+
+      return result;
+    }
+
+    async function loadLeaderboard() {
+      const container = document.getElementById('leaderboard-content');
+      const stageBadge = document.getElementById('current-stage-badge');
+
+      const stageNames = [
+        'Pre-Tournament',
+        'Group Matchday 1',
+        'Group Matchday 2',
+        'Group Matchday 3',
+        'Round of 32',
+        'Round of 16',
+        'Quarterfinal',
+        'Semifinal',
+        'Final'
+      ];
+
+      try {
+        const [leaderboardResponse, teamsResponse] = await Promise.all([
+          fetch('data/leaderboard.json'),
+          fetch('data/teams.json')
+        ]);
+
+        if (!leaderboardResponse.ok || !teamsResponse.ok) {
+          throw new Error('Failed to load leaderboard data');
+        }
+
+        const leaderboardData = await leaderboardResponse.json();
+        const teamsData = await teamsResponse.json();
+        const players = Array.isArray(leaderboardData.players) ? leaderboardData.players : [];
+        const teamIds = (Array.isArray(teamsData.teams) ? teamsData.teams : []).map((team) => team.id);
+
+        const currentStage = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_STAGE) || '0', 10);
+        if (stageBadge) {
+          stageBadge.textContent = stageNames[currentStage] || 'Unknown';
+        }
+
+        if (currentStage === 0) {
+          container.innerHTML = '<p class="text-gray-300 text-base">Contest hasn\'t started yet</p>';
+          return;
+        }
+
+        const userLocked = localStorage.getItem(STORAGE_KEYS.RANKINGS_LOCKED) === 'true';
+        const userRankings = JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_RANKINGS) || '{}');
+
+        const stageDataList = currentStage > 0 ? await loadStageDataUpTo(currentStage) : [];
+        const scoredPlayers = players.map((player) => {
+          const isCurrentUser = !!player.isCurrentUser;
+          let teamRankings = player.teamRankings || {};
+
+          if (isCurrentUser) {
+            teamRankings = userLocked ? userRankings : {};
+          } else {
+            const hasValidRankings = Object.keys(teamRankings).some((teamId) => teamIds.includes(teamId));
+            if (!hasValidRankings) {
+              teamRankings = generateMockRankingMap(teamIds, player.username);
+            }
+          }
+
+          const totalPoints = (isCurrentUser && !userLocked)
+            ? 0
+            : calculateScoreForRankings(teamRankings, stageDataList);
+
+          return {
+            ...player,
+            teamRankings,
+            totalPoints,
+            isCurrentUser
+          };
+        });
+
+        scoredPlayers.sort((a, b) => b.totalPoints - a.totalPoints || a.username.localeCompare(b.username));
+        scoredPlayers.forEach((player, index) => {
+          player.rank = index + 1;
+        });
+
+        if (scoredPlayers.length === 0) {
+          container.innerHTML = '<p class="text-gray-400">No leaderboard data available.</p>';
+          return;
+        }
+
+        container.innerHTML = `
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">Rank</th>
+                <th>Player</th>
+                <th style="width: 120px; text-align: right;">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${scoredPlayers.slice(0, 20).map((player) => `
+                <tr class="${player.isCurrentUser ? 'current-user-row' : ''}">
+                  <td><span class="rank-number">#${player.rank}</span></td>
+                  <td>
+                    <span class="player-name">${player.username}</span>
+                    ${player.isCurrentUser ? '<span class="text-xs text-yellow-500 ml-2">(YOU)</span>' : ''}
+                  </td>
+                  <td><span class="player-points">${player.totalPoints}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (error) {
+        container.innerHTML = '<p class="text-red-400">Could not load leaderboard.</p>';
+      }
+    }
+
+    loadLeaderboard();
+  </script>
+</body>
+</html>

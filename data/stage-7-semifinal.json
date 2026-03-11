@@ -1,0 +1,36 @@
+{
+  "stage": "Semifinal",
+  "stageId": 7,
+  "matches": [
+    {
+      "home": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "away": {
+        "id": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "homeScore": 1,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    }
+  ]
+}

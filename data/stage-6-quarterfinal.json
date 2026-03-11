@@ -1,0 +1,66 @@
+{
+  "stage": "Quarterfinal",
+  "stageId": 6,
+  "matches": [
+    {
+      "home": {
+        "id": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵"
+      },
+      "away": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️"
+      },
+      "away": {
+        "id": "KOR",
+        "name": "Korea Republic",
+        "flag": "🇰🇷"
+      },
+      "homeScore": 3,
+      "awayScore": 2,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "CIV",
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮"
+      },
+      "away": {
+        "id": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "stage": "Round of 16",
+  "stageId": 5,
+  "matches": [
+    {
+      "home": {
+        "id": "POR",
+        "name": "Portugal",
+        "flag": "🇵🇹"
+      },
+      "away": {
+        "id": "JPN",
+        "name": "Japan",
+        "flag": "🇯🇵"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "ALG",
+        "name": "Algeria",
+        "flag": "🇩🇿"
+      },
+      "away": {
+        "id": "UEFA_PO_B",
+        "name": "ITA/ NIR/ WAL/ BIH",
+        "flag": "🏳️"
+      },
+      "homeScore": 0,
+      "awayScore": 1,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "ECU",
+        "name": "Ecuador",
+        "flag": "🇪🇨"
+      },
+      "away": {
+        "id": "ENG",
+        "name": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "homeScore": 2,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "CIV",
+        "name": "Côte d'Ivoire",
+        "flag": "🇨🇮"
+      },
+      "away": {
+        "id": "EGY",
+        "name": "Egypt",
+        "flag": "🇪🇬"
+      },
+      "homeScore": 2,
+      "awayScore": 0,
+      "winner": "home"
+    },
+    {
+      "home": {
+        "id": "TUN",
+        "name": "Tunisia",
+        "flag": "🇹🇳"
+      },
+      "away": {
+        "id": "AUS",
+        "name": "Australia",
+        "flag": "🇦🇺"
+      },
+      "homeScore": 0,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "ESP",
+        "name": "Spain",
+        "flag": "🇪🇸"
+      },
+      "away": {
+        "id": "CRO",
+        "name": "Croatia",
+        "flag": "🇭🇷"
+      },
+      "homeScore": 2,
+      "awayScore": 3,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "RSA",
+        "name": "South Africa",
+        "flag": "🇿🇦"
+      },
+      "away": {
+        "id": "KOR",
+        "name": "Korea Republic",
+        "flag": "🇰🇷"
+      },
+      "homeScore": 0,
+      "awayScore": 2,
+      "winner": "away"
+    },
+    {
+      "home": {
+        "id": "PAN",
+        "name": "Panama",
+        "flag": "🇵🇦"
+      },
+      "away": {
+        "id": "CUW",
+        "name": "Curaçao",
+        "flag": "🇨🇼"
+      },
+      "homeScore": 3,
+      "awayScore": 1,
+      "winner": "home"
+    }
+  ]
+}

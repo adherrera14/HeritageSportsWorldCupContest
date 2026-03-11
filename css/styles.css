@@ -1,0 +1,638 @@
+/* Heritage Sports World Cup Contest CSS */
+
+:root {
+    --bg-primary: #020206;
+    --bg-card: rgb(18, 20, 29);
+    --highlight: rgb(212, 185, 97);
+    --text-primary: white;
+    --text-secondary: rgb(169, 175, 195);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Kanit', sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: 'Kanit', sans-serif;
+}
+
+/* Navigation Styles */
+.nav-btn {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+}
+
+.nav-btn:hover {
+    color: var(--text-primary);
+}
+
+.nav-active {
+    color: var(--highlight);
+}
+
+/* Section Content */
+.section-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Card Styles */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(212, 185, 97, 0.1);
+}
+
+/* Tier System Styles */
+.tier-section {
+    margin-bottom: 24px;
+}
+
+.tier-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border-left: 4px solid var(--highlight);
+}
+
+.tier-label {
+    font-weight: bold;
+    font-size: 18px;
+    min-width: 50px;
+}
+
+.tier-range {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.tier-drop-zone {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px dashed rgba(212, 185, 97, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 120px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.tier-drop-zone.drag-over {
+    background-color: rgba(212, 185, 97, 0.1);
+    border-color: rgba(212, 185, 97, 0.6);
+}
+
+.team-card {
+    background-color: var(--bg-card);
+    border: 1px solid rgba(212, 185, 97, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    cursor: move;
+    user-select: none;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.team-card:hover {
+    background-color: rgba(212, 185, 97, 0.1);
+    border-color: var(--highlight);
+    transform: scale(1.05);
+}
+
+.team-card.dragging {
+    opacity: 0.5;
+}
+
+.team-flag {
+    font-size: 20px;
+}
+
+/* Group Stage Styles */
+.group-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.group-title {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: var(--highlight);
+}
+
+.standings-table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+}
+
+.standings-table thead {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 8px 4px;
+    text-align: left;
+}
+
+.standings-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.standings-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
+}
+
+.standings-table tbody tr:hover {
+    background-color: rgba(212, 185, 97, 0.1);
+}
+
+.team-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.team-name-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.team-flag-large {
+    font-size: 18px;
+}
+
+.points-col {
+    font-weight: bold;
+    color: var(--highlight);
+    text-align: right;
+}
+
+/* Knockout Styles */
+.match-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.match-teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.team-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.vs-badge {
+    flex: 0 0 auto;
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 800;
+    padding: 0 10px;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+}
+
+.match-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.score-item {
+    text-align: center;
+}
+
+.score-number {
+    font-size: 42px;
+    font-weight: bold;
+    color: var(--highlight);
+    line-height: 1;
+}
+
+.score-divider {
+    font-size: 24px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0 12px;
+}
+
+.match-result {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.active-phase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 1024px) {
+    .active-phase-grid.groups-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-phase-grid.knockout-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-phase-grid.knockout-grid.single-match {
+        grid-template-columns: minmax(320px, 760px);
+        justify-content: center;
+    }
+}
+
+.winner-badge {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.draw-badge {
+    background-color: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Leaderboard Styles */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table thead {
+    border-bottom: 2px solid rgba(212, 185, 97, 0.3);
+}
+
+.leaderboard-table th {
+    padding: 12px 8px;
+    text-align: left;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.leaderboard-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
+}
+
+.leaderboard-table tbody tr:hover {
+    background-color: rgba(212, 185, 97, 0.1);
+}
+
+.leaderboard-table td {
+    padding: 12px 8px;
+    font-size: 14px;
+}
+
+.rank-number {
+    font-weight: bold;
+    color: var(--highlight);
+    min-width: 30px;
+}
+
+.player-name {
+    font-weight: 500;
+}
+
+.player-points {
+    text-align: right;
+    font-weight: bold;
+    color: var(--highlight);
+}
+
+.current-user-row {
+    background-color: rgba(212, 185, 97, 0.15) !important;
+    border-left: 3px solid var(--highlight);
+}
+
+/* Button Styles */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--highlight);
+    color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+    background-color: #d4b961;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 185, 97, 0.3);
+}
+
+.btn-success {
+    background-color: #22c55e;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #16a34a;
+    transform: translateY(-2px);
+}
+
+.btn-disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+/* Utility Classes */
+.text-highlight {
+    color: var(--highlight);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.mb-4 {
+    margin-bottom: 16px;
+}
+
+.p-4 {
+    padding: 16px;
+}
+
+/* Direct Ranking UX Styles */
+.ranking-groups-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.ranking-group-card {
+    min-height: 100%;
+}
+
+.rank-action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.ranking-input::-webkit-outer-spin-button,
+.ranking-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ranking-input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.rank-picker-toggle {
+    border: 1px solid rgba(212, 185, 97, 0.35);
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #f3e4aa;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.rank-picker-toggle-active {
+    background-color: rgba(212, 185, 97, 0.18);
+    border-color: rgba(212, 185, 97, 0.7);
+}
+
+.rank-picker-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background-color: rgba(6, 8, 12, 0.82);
+    padding: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.rank-picker-sheet {
+    width: 100%;
+    max-width: 720px;
+    max-height: min(88vh, 920px);
+    overflow: auto;
+    background: linear-gradient(180deg, rgba(32, 36, 46, 0.98) 0%, rgba(18, 20, 29, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.rank-picker-sheet-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.rank-picker-close-btn {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+}
+
+.rank-picker-options {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.rank-picker-option {
+    min-height: 56px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.rank-picker-option-current {
+    border-color: rgba(212, 185, 97, 0.9);
+    background-color: rgba(212, 185, 97, 0.2);
+    color: #ffe9a3;
+}
+
+.rank-picker-option-disabled {
+    opacity: 0.35;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.rank-picker-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.rank-picker-primary-btn,
+.rank-picker-secondary-btn {
+    min-height: 48px;
+    border-radius: 12px;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.rank-picker-primary-btn {
+    background-color: rgba(34, 197, 94, 0.9);
+    color: white;
+}
+
+.rank-picker-secondary-btn {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: white;
+}
+
+body.rank-picker-open {
+    overflow: hidden;
+}
+
+.ranking-row-duplicate {
+    border-color: rgba(239, 68, 68, 0.85);
+    box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.5);
+}
+
+@media (min-width: 768px) {
+    .ranking-groups-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    .ranking-groups-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .standings-table,
+    .leaderboard-table {
+        font-size: 12px;
+    }
+
+    .standings-table th,
+    .standings-table td,
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 6px 4px;
+    }
+
+    .match-teams {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .team-info {
+        width: 100%;
+    }
+
+    .rank-picker-options {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rank-picker-actions {
+        grid-template-columns: 1fr;
+    }
+}

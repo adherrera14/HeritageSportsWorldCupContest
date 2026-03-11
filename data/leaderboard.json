@@ -1,0 +1,24 @@
+{
+  "players": [
+    { "rank": 1, "username": "SoccerPro92", "totalPoints": 1847, "teamRankings": { "BRA": 48, "GER": 45, "FRA": 42, "ENG": 40, "ESP": 38, "NED": 36, "ARG": 35, "POR": 32, "BEL": 30, "JPN": 28, "COL": 25, "USA": 23, "KOR": 22, "AUS": 20, "CZE": 18, "CRO": 16, "SUI": 15, "URY": 14, "ITA": 12, "MEX": 11, "POL": 10, "NOR": 9, "DEN": 8, "SEN": 7, "SWE": 6, "EGY": 5, "GHA": 4, "TUN": 3, "IRN": 2, "COL": 1, "CAN": 1, "SUI": 1, "RON": 1, "KAZ": 1, "VNM": 1, "CHL": 1, "MOR": 1, "BOL": 1, "UAE": 1, "PER": 1, "PAR": 1, "CMR": 1, "SVK": 1, "GRE": 1, "NGA": 1, "ECU": 1, "ISR": 1 } },
+    { "rank": 2, "username": "GoalKeeper23", "totalPoints": 1752, "teamRankings": {} },
+    { "rank": 3, "username": "CroatiaFan", "totalPoints": 1698, "teamRankings": {} },
+    { "rank": 4, "username": "MatchChampion", "totalPoints": 1645, "teamRankings": {} },
+    { "rank": 5, "username": "BrazilForever", "totalPoints": 1592, "teamRankings": {} },
+    { "rank": 6, "username": "FootballWizard", "totalPoints": 1541, "teamRankings": {} },
+    { "rank": 7, "username": "StreetStyle88", "totalPoints": 1488, "teamRankings": {} },
+    { "rank": 8, "username": "DefenseFirst", "totalPoints": 1435, "teamRankings": {} },
+    { "rank": 9, "username": "PenaltyMaster", "totalPoints": 1382, "teamRankings": {} },
+    { "rank": 10, "username": "GolazoKing", "totalPoints": 1329, "teamRankings": {} },
+    { "rank": 11, "username": "TacticalMind", "totalPoints": 1276, "teamRankings": {} },
+    { "rank": 12, "username": "CupWinner2026", "totalPoints": 1223, "teamRankings": {} },
+    { "rank": 13, "username": "FormationExpert", "totalPoints": 1170, "teamRankings": {} },
+    { "rank": 14, "username": "CoachOfTheDay", "totalPoints": 1117, "teamRankings": {} },
+    { "rank": 15, "username": "PassMaster", "totalPoints": 1064, "teamRankings": {} },
+    { "rank": 16, "username": "StreetBall99", "totalPoints": 1011, "teamRankings": {} },
+    { "rank": 17, "username": "ClinicalFinisher", "totalPoints": 958, "teamRankings": {} },
+    { "rank": 18, "username": "YellowCardHunter", "totalPoints": 905, "teamRankings": {} },
+    { "rank": 19, "username": "FastBreakPro", "totalPoints": 852, "teamRankings": {} },
+    { "rank": 20, "username": "CurrentUser", "totalPoints": 799, "teamRankings": {}, "isCurrentUser": true }
+  ]
+}
