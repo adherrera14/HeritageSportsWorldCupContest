@@ -73,6 +73,10 @@ textarea {
     box-shadow: 0 8px 16px rgba(212, 185, 97, 0.1);
 }
 
+#home-score-card {
+    background: linear-gradient(135deg, rgb(212, 185, 97) 0%, rgb(196, 166, 74) 52%, rgb(167, 136, 49) 100%);
+}
+
 /* Tier System Styles */
 .tier-section {
     margin-bottom: 24px;
@@ -421,6 +425,10 @@ textarea {
     color: var(--highlight);
 }
 
+.team-rank-points {
+    font-weight: 100;
+}
+
 .text-secondary {
     color: var(--text-secondary);
 }
@@ -626,6 +634,13 @@ body.rank-picker-open {
 
     .team-info {
         width: 100%;
+        justify-content: center;
+    }
+
+    .match-teams .team-info .flex-1,
+    .match-teams .team-info .text-right {
+        flex: 0 1 auto;
+        text-align: center;
     }
 
     .rank-picker-options {

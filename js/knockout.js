@@ -48,17 +48,18 @@ function getKnockoutRankForTeam(team) {
 }
 
 function getKnockoutTeamDisplayNameWithRank(team) {
+    const uppercaseName = String(team.name || '').toUpperCase();
     const shouldShowRank = window.appState.currentStage > 0;
     if (!shouldShowRank) {
-        return team.name;
+        return uppercaseName;
     }
 
     const rank = getKnockoutRankForTeam(team);
     if (!rank) {
-        return team.name;
+        return uppercaseName;
     }
 
-    return `${team.name} <span class="text-highlight font-semibold">${rank}</span>`;
+    return `${uppercaseName} <span class="text-highlight team-rank-points">(${rank})</span>`;
 }
 
 // Create Match Card

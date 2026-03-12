@@ -22,17 +22,18 @@ function updateGroupsSection() {
 }
 
 function getGroupTeamDisplayNameWithRank(teamId, teamName) {
+    const uppercaseName = String(teamName || '').toUpperCase();
     const shouldShowRank = window.appState.currentStage > 0;
     if (!shouldShowRank) {
-        return teamName;
+        return uppercaseName;
     }
 
     const rank = getAssignedRankForTeam(teamId, teamName);
     if (!rank) {
-        return teamName;
+        return uppercaseName;
     }
 
-    return `${teamName} <span class="text-highlight font-semibold">${rank}</span>`;
+    return `${uppercaseName} <span class="text-highlight team-rank-points">(${rank})</span>`;
 }
 
 function resolveTeamMeta(team) {

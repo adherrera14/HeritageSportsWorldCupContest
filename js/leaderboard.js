@@ -50,7 +50,6 @@ function createLeaderboardTable() {
             </td>
             <td>
                 <span class="player-name">${player.username}</span>
-                ${player.isCurrentUser ? '<span class="text-xs text-yellow-500 ml-2">(YOU)</span>' : ''}
             </td>
             <td>
                 <span class="player-points">${player.totalPoints}</span>
