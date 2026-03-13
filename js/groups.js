@@ -1,19 +1,36 @@
 // Groups Stage Interface
 
 function updateGroupsSection() {
-    const section = document.getElementById('groups-section');
-    
-    if (!window.appState.currentStageData || !window.appState.currentStageData.groupStandings) {
-        section.innerHTML = '<p class="text-gray-400">No group data available for this stage.</p>';
+    const isReviewMode = window.appState.currentStage > 3;
+
+    // During knockout stages use the final group stage (stage 3) data
+    const groupData = isReviewMode
+        ? window.appState.stageDataCache[3]
+        : window.appState.currentStageData;
+
+    // Update section title
+    const titleEl = document.getElementById('groups-section-title');
+    if (titleEl) {
+        titleEl.textContent = isReviewMode ? 'Final Group Stage Results' : 'Group Stage Standings';
+    }
+
+    // Show back button only in review mode
+    const backBtn = document.getElementById('groups-back-btn');
+    if (backBtn) {
+        backBtn.classList.toggle('hidden', !isReviewMode);
+    }
+
+    const groupsContainer = document.getElementById('groups-container');
+    if (!groupData || !groupData.groupStandings) {
+        groupsContainer.innerHTML = '<p class="text-gray-400">No group data available.</p>';
         return;
     }
-    
-    const groupsContainer = document.getElementById('groups-container');
+
     groupsContainer.innerHTML = '';
     groupsContainer.className = 'active-phase-grid groups-grid';
-    
-    const groups = window.appState.currentStageData.groupStandings;
-    
+
+    const groups = groupData.groupStandings;
+
     // Display each group
     Object.entries(groups).forEach(([groupName, standings]) => {
         const groupCard = createGroupCard(groupName, standings);
@@ -104,9 +121,9 @@ function createGroupCard(groupName, standings) {
     thead.innerHTML = `
         <tr>
             <th>Team</th>
-            <th style="width: 40px; text-align: center;">W</th>
-            <th style="width: 40px; text-align: center;">D</th>
-            <th style="width: 40px; text-align: center;">L</th>
+            <th class="stat-col-wins" style="width: 40px; text-align: center;">W</th>
+            <th class="stat-col-muted" style="width: 40px; text-align: center;">D</th>
+            <th class="stat-col-muted" style="width: 40px; text-align: center;">L</th>
             <th class="points-col" style="width: 70px; text-align: right;">Contest</th>
         </tr>
     `;
@@ -129,9 +146,9 @@ function createGroupCard(groupName, standings) {
                     <span class="team-name-text">${getGroupTeamDisplayNameWithRank(teamId, teamName)}</span>
                 </div>
             </td>
-            <td style="text-align: center;">${team.wins}</td>
-            <td style="text-align: center;">${team.draws}</td>
-            <td style="text-align: center;">${team.losses}</td>
+            <td class="stat-col-wins" style="text-align: center;">${team.wins}</td>
+            <td class="stat-col-muted" style="text-align: center;">${team.draws}</td>
+            <td class="stat-col-muted" style="text-align: center;">${team.losses}</td>
             <td style="text-align: right; color: rgb(212, 185, 97); font-weight: bold;">${contestPoints}</td>
         `;
         tbody.appendChild(row);

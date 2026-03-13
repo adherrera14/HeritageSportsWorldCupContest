@@ -178,6 +178,55 @@ function calculateUserScore() {
     return score;
 }
 
+// Calculate Group Stage Score (stages 1–3 only)
+function calculateGroupStageScore() {
+    if (!userLockedRankings || currentStage === 0) {
+        return 0;
+    }
+
+    let score = 0;
+    const maxGroupStage = Math.min(currentStage, 3);
+
+    for (let stageId = 1; stageId <= maxGroupStage; stageId++) {
+        const stageData = stageDataCache[stageId];
+        if (!stageData || !stageData.matches) {
+            continue;
+        }
+
+        stageData.matches.forEach(match => {
+            if (match.winner === 'home') {
+                const ranking = userRankings[match.home.id];
+                if (ranking) score += ranking;
+            }
+            if (match.winner === 'away') {
+                const ranking = userRankings[match.away.id];
+                if (ranking) score += ranking;
+            }
+        });
+    }
+
+    return score;
+}
+
+// Calculate score for a single stage
+function calculateStageScore(stageId) {
+    if (!userLockedRankings) return 0;
+    const stageData = stageDataCache[stageId];
+    if (!stageData || !stageData.matches) return 0;
+    let score = 0;
+    stageData.matches.forEach(match => {
+        if (match.winner === 'home') {
+            const ranking = userRankings[match.home.id];
+            if (ranking) score += ranking;
+        }
+        if (match.winner === 'away') {
+            const ranking = userRankings[match.away.id];
+            if (ranking) score += ranking;
+        }
+    });
+    return score;
+}
+
 // Update All UI Sections
 function updateAllSections() {
     updateAppLayout();
@@ -237,6 +286,13 @@ function updateHomeSection() {
         homeScoreCard.classList.toggle('hidden', isPreTournament);
     }
 
+    const isKnockout = currentStage > 3;
+    const pastStagesNav = document.getElementById('past-stages-nav');
+    if (pastStagesNav) {
+        pastStagesNav.classList.toggle('hidden', !isKnockout);
+        if (isKnockout) renderPastStagesNav(pastStagesNav);
+    }
+
     if (isPreTournament) {
         if (activePhaseContainer) {
             activePhaseContainer.innerHTML = '';
@@ -286,6 +342,96 @@ function renderActivePhase(container) {
     });
 }
 
+const PAST_STAGE_META = [
+    { stageId: null,  label: 'Group Stage',   icon: '📊', fn: 'group' },
+    { stageId: 4,     label: 'Round of 32',   icon: '⚽', fn: 'knockout' },
+    { stageId: 5,     label: 'Round of 16',   icon: '⚽', fn: 'knockout' },
+    { stageId: 6,     label: 'Quarterfinal',  icon: '🏆', fn: 'knockout' },
+    { stageId: 7,     label: 'Semifinal',     icon: '🏆', fn: 'knockout' },
+];
+
+function renderPastStagesNav(container) {
+    container.innerHTML = '';
+
+    const visibleStages = PAST_STAGE_META.filter(({ stageId }) => (
+        stageId === null ? currentStage > 3 : currentStage > stageId
+    ));
+
+    const grid = document.createElement('div');
+    grid.className = `past-stages-grid past-stages-count-${visibleStages.length}`;
+
+    visibleStages.forEach(({ stageId, label, icon, fn }) => {
+        const score = stageId === null ? calculateGroupStageScore() : calculateStageScore(stageId);
+
+        const btn = document.createElement('button');
+        btn.className = 'past-stage-tile';
+        btn.innerHTML = `
+            <span class="past-stage-icon">${icon}</span>
+            <span class="past-stage-label">${label}</span>
+            <span class="past-stage-pts">${score} pts</span>
+        `;
+        if (fn === 'group') {
+            btn.onclick = showGroupStageReview;
+        } else {
+            btn.onclick = () => showKnockoutStageReview(stageId);
+        }
+        grid.appendChild(btn);
+    });
+
+    container.appendChild(grid);
+}
+
+// Group Stage Review Navigation
+function showGroupStageReview() {
+    updateGroupsSection();
+    const scoreEl = document.getElementById('groupStageScore');
+    const banner = document.getElementById('group-stage-score-banner');
+    if (scoreEl) scoreEl.textContent = calculateGroupStageScore();
+    if (banner) banner.classList.remove('hidden');
+    showSection('groups-section');
+}
+
+// Knockout Stage Review Navigation
+const KNOCKOUT_STAGE_NAMES = {
+    4: 'Round of 32',
+    5: 'Round of 16',
+    6: 'Quarterfinal',
+    7: 'Semifinal',
+};
+
+function showKnockoutStageReview(stageId) {
+    const stageData = stageDataCache[stageId];
+    const titleEl = document.getElementById('knockout-review-title');
+    const labelEl = document.getElementById('knockout-review-score-label');
+    const scoreEl = document.getElementById('knockoutReviewScore');
+    const reviewContainer = document.getElementById('knockout-review-container');
+    const stageName = KNOCKOUT_STAGE_NAMES[stageId] || 'Stage';
+
+    if (titleEl) titleEl.textContent = `${stageName} Results`;
+    if (labelEl) labelEl.textContent = `Your ${stageName} Points`;
+    if (scoreEl) scoreEl.textContent = calculateStageScore(stageId);
+
+    if (reviewContainer) {
+        reviewContainer.innerHTML = '';
+        reviewContainer.classList.toggle('single-match', stageData?.matches?.length === 1);
+        if (stageData && stageData.matches) {
+            stageData.matches.forEach((match, index) => {
+                reviewContainer.appendChild(createMatchCard(match, index));
+            });
+        } else {
+            reviewContainer.innerHTML = '<p class="text-gray-400">No data available for this stage.</p>';
+        }
+    }
+
+    showSection('knockout-review-section');
+}
+
+function backToDashboard() {
+    const banner = document.getElementById('group-stage-score-banner');
+    if (banner) banner.classList.add('hidden');
+    showSection('home-section');
+}
+
 // Setup Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     // Reserved for future page-level interactions.
@@ -310,6 +456,9 @@ window.appState = {
     },
     get allLeaderboardData() {
         return allLeaderboardData;
+    },
+    get stageDataCache() {
+        return stageDataCache;
     },
     STORAGE_KEYS,
     setCurrentStage: async (stageId) => {

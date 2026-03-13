@@ -35,6 +35,7 @@
                     </div>
                 </div>
 
+                <div id="past-stages-nav" class="hidden mb-4"></div>
                 <div id="active-phase-section" class="mb-6">
                     <div class="flex items-center justify-between mb-4">
                         <h3 id="active-phase-title" class="font-bold text-xl">Current Phase</h3>
@@ -67,7 +68,16 @@
 
             <!-- Groups Section -->
             <section id="groups-section" class="section-content hidden">
-                <h2 class="text-2xl font-bold mb-4">Group Stage Standings</h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="groups-section-title" class="text-2xl font-bold">Group Stage Standings</h2>
+                    <button id="groups-back-btn" class="hidden bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-3 py-2 rounded-lg border border-gray-600" onclick="backToDashboard()">
+                        ← Dashboard
+                    </button>
+                </div>
+                <div id="group-stage-score-banner" class="hidden mb-4 rounded-lg px-4 py-3 text-center" style="background: rgba(212,185,97,0.12); border: 1px solid rgba(212,185,97,0.3);">
+                    <p class="text-xs uppercase tracking-wide" style="color: rgba(212,185,97,0.75); margin-bottom: 2px;">Your Group Stage Points</p>
+                    <p class="text-2xl font-bold" style="color: rgb(212,185,97);"><span id="groupStageScore">0</span></p>
+                </div>
                 <div id="groups-container"></div>
             </section>
 
@@ -75,6 +85,21 @@
             <section id="knockout-section" class="section-content hidden">
                 <h2 class="text-2xl font-bold mb-4">Knockout Matches</h2>
                 <div id="knockout-container"></div>
+            </section>
+
+            <!-- Knockout Review Section -->
+            <section id="knockout-review-section" class="section-content hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 id="knockout-review-title" class="text-2xl font-bold">Stage Results</h2>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-3 py-2 rounded-lg border border-gray-600" onclick="backToDashboard()">
+                        ← Dashboard
+                    </button>
+                </div>
+                <div id="knockout-review-score-banner" class="mb-4 rounded-lg px-4 py-3 text-center" style="background: rgba(212,185,97,0.12); border: 1px solid rgba(212,185,97,0.3);">
+                    <p id="knockout-review-score-label" class="text-xs uppercase tracking-wide" style="color: rgba(212,185,97,0.75); margin-bottom: 2px;">Your Points This Stage</p>
+                    <p class="text-2xl font-bold" style="color: rgb(212,185,97);"><span id="knockoutReviewScore">0</span></p>
+                </div>
+                <div id="knockout-review-container" class="active-phase-grid knockout-grid"></div>
             </section>
 
         </div>
