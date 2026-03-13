@@ -23,28 +23,45 @@ function updateKnockoutSection() {
 }
 
 function getKnockoutRankForTeam(team) {
+    const teamId = team?.teamId || team?.id || null;
+    const teamName = team?.name || '';
+
+    // Reuse the same resolver used by the groups dashboard to keep behavior consistent.
+    if (typeof getAssignedRankForTeam === 'function') {
+        const sharedRank = getAssignedRankForTeam(teamId, teamName);
+        if (sharedRank) {
+            return Number(sharedRank) || 0;
+        }
+    }
+
     const NAME_ALIASES = {
         'United States': 'USA',
-        'South Korea': 'Korea Republic'
+        'USA': 'United States',
+        'South Korea': 'Korea Republic',
+        'Korea Republic': 'South Korea'
     };
 
-    let rank = window.appState.userRankings?.[team.id];
+    let rank = teamId ? window.appState.userRankings?.[teamId] : undefined;
 
-    if (!rank && team.name) {
-        const matchedTeam = (window.appState.teamsData || []).find(item => item.name === team.name);
+    if (!rank && teamName) {
+        const normalizedName = String(teamName).trim().toLowerCase();
+        const matchedTeam = (window.appState.teamsData || []).find(
+            item => String(item.name || '').trim().toLowerCase() === normalizedName
+        );
         if (matchedTeam) {
             rank = window.appState.userRankings?.[matchedTeam.id];
         }
     }
 
-    if (!rank && team.name && NAME_ALIASES[team.name]) {
-        const aliasedTeam = (window.appState.teamsData || []).find(item => item.name === NAME_ALIASES[team.name]);
+    if (!rank && teamName && NAME_ALIASES[teamName]) {
+        const aliasedName = NAME_ALIASES[teamName];
+        const aliasedTeam = (window.appState.teamsData || []).find(item => item.name === aliasedName);
         if (aliasedTeam) {
             rank = window.appState.userRankings?.[aliasedTeam.id];
         }
     }
 
-    return rank || 0;
+    return Number(rank) || 0;
 }
 
 function getKnockoutTeamDisplayNameWithRank(team) {
@@ -60,6 +77,12 @@ function getKnockoutTeamDisplayNameWithRank(team) {
     }
 
     return `${uppercaseName} <span class="text-highlight team-rank-points">(${rank})</span>`;
+}
+
+function getKnockoutWinnerLabel(team) {
+    const uppercaseName = String(team.name || '').toUpperCase();
+    const rank = getKnockoutRankForTeam(team);
+    return `${uppercaseName} WINS! <span class="winner-points">+${rank}</span>`;
 }
 
 // Create Match Card
@@ -124,9 +147,9 @@ function createMatchCard(match, index) {
     resultSection.className = 'match-result';
     
     if (match.winner === 'home') {
-        resultSection.innerHTML = `<span class="winner-badge">🏆 ${getKnockoutTeamDisplayNameWithRank(match.home)} Wins</span>`;
+        resultSection.innerHTML = `<span class="winner-badge">${getKnockoutWinnerLabel(match.home)}</span>`;
     } else if (match.winner === 'away') {
-        resultSection.innerHTML = `<span class="winner-badge">🏆 ${getKnockoutTeamDisplayNameWithRank(match.away)} Wins</span>`;
+        resultSection.innerHTML = `<span class="winner-badge">${getKnockoutWinnerLabel(match.away)}</span>`;
     } else if (match.winner === 'draw') {
         resultSection.innerHTML = `<span class="draw-badge">Draw</span>`;
     }

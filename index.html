@@ -12,7 +12,7 @@
 </head>
 <body class="text-white">
     <header class="site-sticky-header" role="banner">
-        <div class="site-sticky-header-inner">Heritage Sports World Cup Challenge Free Contest</div>
+        <div class="site-sticky-header-inner">Heritage Sports World Cup Challenge</div>
     </header>
     <div id="app" class="pb-8">
         <!-- Main Content Area -->
@@ -21,16 +21,18 @@
             <section id="home-section" class="section-content hidden">
                 <h2 id="dashboard-title" class="text-2xl font-bold mb-4">2026 FIFA World Cup</h2>
                 
-                <!-- Tournament Stage Card -->
-                <div class="bg-gray-800 rounded-lg p-4 mb-4 border border-gray-700">
-                    <p class="text-gray-400 text-sm mb-2">Current Stage</p>
-                    <p class="text-xl font-bold" id="currentStage">Pre-Tournament</p>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <!-- Tournament Stage Card -->
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                        <p class="text-gray-400 text-sm mb-2">Current Stage</p>
+                        <p class="text-xl font-bold" id="currentStage">Pre-Tournament</p>
+                    </div>
 
-                <!-- User Score Card -->
-                <div id="home-score-card" class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-lg p-6 mb-4 text-center hidden">
-                    <p class="text-sm opacity-90 mb-1">Total Contest Points</p>
-                    <p class="text-4xl font-bold" id="userScore">0</p>
+                    <!-- User Score Card -->
+                    <div id="home-score-card" class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-lg p-6 text-center hidden">
+                        <p class="text-sm opacity-90 mb-1">Total Contest Points</p>
+                        <p class="text-4xl font-bold" id="userScore">0</p>
+                    </div>
                 </div>
 
                 <div id="active-phase-section" class="mb-6">

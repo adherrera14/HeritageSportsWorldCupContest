@@ -497,6 +497,11 @@ function submitRankings() {
     
     // Update UI
     updateRankingsSection();
+
+    // Ensure the locked confirmation view opens from the top of the page.
+    window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 }
 
 // Display Locked Rankings
