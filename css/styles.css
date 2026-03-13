@@ -398,6 +398,7 @@ textarea {
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .leaderboard-table thead {
@@ -409,7 +410,7 @@ textarea {
     text-align: left;
     color: var(--text-secondary);
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .leaderboard-table tbody tr {
@@ -423,12 +424,37 @@ textarea {
 
 .leaderboard-table td {
     padding: 12px 8px;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.leaderboard-col-rank {
+    width: 64px;
+    text-align: center;
+}
+
+.leaderboard-col-player {
+    text-align: left;
+}
+
+.leaderboard-col-points {
+    width: 120px;
+    text-align: right;
+}
+
+.leaderboard-table th.leaderboard-col-rank,
+.leaderboard-table td.leaderboard-col-rank {
+    text-align: center;
+}
+
+.leaderboard-table th.leaderboard-col-points,
+.leaderboard-table td.leaderboard-col-points {
+    text-align: right;
 }
 
 .rank-number {
     font-weight: bold;
     color: var(--highlight);
+    display: inline-block;
     min-width: 30px;
 }
 
@@ -437,6 +463,8 @@ textarea {
 }
 
 .player-points {
+    display: inline-block;
+    min-width: 3ch;
     text-align: right;
     font-weight: bold;
     color: var(--highlight);

@@ -27,9 +27,9 @@ function createLeaderboardTable() {
     const thead = document.createElement('thead');
     thead.innerHTML = `
         <tr>
-            <th style="width: 50px;">Rank</th>
-            <th>Player</th>
-            <th style="width: 120px; text-align: right;">Points</th>
+            <th class="leaderboard-col-rank">Rank</th>
+            <th class="leaderboard-col-player">Player</th>
+            <th class="leaderboard-col-points">Points</th>
         </tr>
     `;
     table.appendChild(thead);
@@ -45,13 +45,13 @@ function createLeaderboardTable() {
         }
         
         row.innerHTML = `
-            <td>
+            <td class="leaderboard-col-rank">
                 <span class="rank-number">#${player.rank}</span>
             </td>
-            <td>
+            <td class="leaderboard-col-player">
                 <span class="player-name">${player.username}</span>
             </td>
-            <td>
+            <td class="leaderboard-col-points">
                 <span class="player-points">${player.totalPoints}</span>
             </td>
         `;

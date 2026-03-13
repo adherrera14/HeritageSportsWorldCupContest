@@ -202,19 +202,19 @@
           <table class="leaderboard-table">
             <thead>
               <tr>
-                <th style="width: 50px;">Rank</th>
-                <th>Player</th>
-                <th style="width: 120px; text-align: right;">Points</th>
+                <th class="leaderboard-col-rank">Rank</th>
+                <th class="leaderboard-col-player">Player</th>
+                <th class="leaderboard-col-points">Points</th>
               </tr>
             </thead>
             <tbody>
               ${scoredPlayers.slice(0, 20).map((player) => `
                 <tr class="${player.isCurrentUser ? 'current-user-row' : ''}">
-                  <td><span class="rank-number">#${player.rank}</span></td>
-                  <td>
+                  <td class="leaderboard-col-rank"><span class="rank-number">#${player.rank}</span></td>
+                  <td class="leaderboard-col-player">
                     <span class="player-name">${player.username}</span>
                   </td>
-                  <td><span class="player-points">${player.totalPoints}</span></td>
+                  <td class="leaderboard-col-points"><span class="player-points">${player.totalPoints}</span></td>
                 </tr>
               `).join('')}
             </tbody>
