@@ -37,6 +37,17 @@ textarea {
     backdrop-filter: blur(6px);
 }
 
+.site-header-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+}
+
 .site-sticky-header-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -47,6 +58,76 @@ textarea {
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #fff;
+}
+
+.site-brand-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.site-brand-title {
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.05;
+}
+
+.site-brand-title:hover {
+    color: var(--highlight);
+}
+
+.site-brand-subtitle {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.site-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.site-nav-link:hover {
+    color: #fff;
+    border-color: rgba(212, 185, 97, 0.38);
+    background: rgba(212, 185, 97, 0.12);
+    transform: translateY(-1px);
+}
+
+.site-nav-link-active {
+    color: #090909;
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.98) 0%, rgba(191, 158, 69, 0.98) 100%);
+    border-color: rgba(212, 185, 97, 0.92);
+}
+
+.site-page-shell {
+    padding-top: 12px;
 }
 
 /* Navigation Styles */
@@ -92,6 +173,88 @@ textarea {
 .card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(212, 185, 97, 0.1);
+}
+
+.rules-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+}
+
+.rules-card {
+    background: linear-gradient(180deg, rgba(18, 20, 29, 0.98) 0%, rgba(12, 14, 21, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+}
+
+.rules-content h1,
+.rules-content h2,
+.rules-content h3 {
+    margin-top: 0;
+    line-height: 1.08;
+}
+
+.rules-content h1 {
+    margin-bottom: 18px;
+    font-size: clamp(24px, 4.2vw, 32px);
+    font-weight: 700;
+}
+
+.rules-content h2 {
+    margin-bottom: 12px;
+    margin-top: 28px;
+    font-size: 23px;
+    color: var(--highlight);
+}
+
+.rules-content h3 {
+    margin-bottom: 10px;
+    margin-top: 22px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.rules-content p,
+.rules-content li {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.rules-content p {
+    margin: 0 0 14px;
+}
+
+.rules-content ul,
+.rules-content ol {
+    margin: 0 0 18px;
+    padding-left: 22px;
+}
+
+.rules-content li + li {
+    margin-top: 6px;
+}
+
+.rules-content code {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(212, 185, 97, 0.16);
+    border: 1px solid rgba(212, 185, 97, 0.22);
+    color: #fff;
+    font-size: 0.95em;
+}
+
+.rules-loading,
+.rules-error {
+    margin: 0;
+    font-size: 16px;
+}
+
+.rules-error {
+    color: #fca5a5;
 }
 
 #home-score-card {
@@ -312,6 +475,11 @@ textarea {
 }
 
 @media (min-width: 640px) {
+    .site-header-shell {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
     .past-stages-count-1 .past-stage-tile {
         flex-basis: min(280px, 100%);
         max-width: 280px;
@@ -327,6 +495,25 @@ textarea {
     .past-stages-count-5 .past-stage-tile {
         flex-basis: calc(33.333% - 10px);
         max-width: calc(33.333% - 10px);
+    }
+}
+
+@media (max-width: 639px) {
+    .site-header-shell {
+        align-items: flex-start;
+    }
+
+    .site-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .site-nav-link {
+        flex: 1 1 calc(50% - 8px);
+    }
+
+    .rules-card {
+        padding: 18px;
     }
 }
 

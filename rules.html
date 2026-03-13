@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Sports - Contest Rules</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="text-white">
+    <header class="site-sticky-header" role="banner">
+        <div class="site-header-shell">
+            <div class="site-brand-block">
+                <a href="index.html" class="site-brand-title">Heritage Sports World Cup Challenge</a>
+                <p class="site-brand-subtitle">2026 FIFA World Cup contest</p>
+            </div>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="index.html" class="site-nav-link">Contest</a>
+                <a href="leaderboard.html" class="site-nav-link">Leaderboard</a>
+                <a href="rules.html" class="site-nav-link site-nav-link-active" aria-current="page">Rules</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-page-shell">
+        <div class="max-w-4xl mx-auto px-4 py-6 rules-layout">
+            <section class="rules-card" aria-live="polite">
+                <div id="rules-content" class="rules-content">
+                    <p class="rules-loading">Loading contest rules...</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderInlineMarkdown(text) {
+            return escapeHtml(text).replace(/`([^`]+)`/g, '<code>$1</code>');
+        }
+
+        function renderRulesMarkdown(markdown) {
+            const lines = markdown.split(/\r?\n/);
+            const html = [];
+            let listType = null;
+
+            function closeList() {
+                if (listType) {
+                    html.push(`</${listType}>`);
+                    listType = null;
+                }
+            }
+
+            lines.forEach((line) => {
+                const trimmed = line.trim();
+
+                if (!trimmed) {
+                    closeList();
+                    return;
+                }
+
+                if (trimmed.startsWith('# ')) {
+                    closeList();
+                    html.push(`<h1>${renderInlineMarkdown(trimmed.slice(2))}</h1>`);
+                    return;
+                }
+
+                if (trimmed.startsWith('## ')) {
+                    closeList();
+                    html.push(`<h2>${renderInlineMarkdown(trimmed.slice(3))}</h2>`);
+                    return;
+                }
+
+                if (trimmed.startsWith('### ')) {
+                    closeList();
+                    html.push(`<h3>${renderInlineMarkdown(trimmed.slice(4))}</h3>`);
+                    return;
+                }
+
+                if (trimmed.startsWith('- ')) {
+                    if (listType !== 'ul') {
+                        closeList();
+                        listType = 'ul';
+                        html.push('<ul>');
+                    }
+
+                    html.push(`<li>${renderInlineMarkdown(trimmed.slice(2))}</li>`);
+                    return;
+                }
+
+                if (/^\d+\.\s/.test(trimmed)) {
+                    if (listType !== 'ol') {
+                        closeList();
+                        listType = 'ol';
+                        html.push('<ol>');
+                    }
+
+                    html.push(`<li>${renderInlineMarkdown(trimmed.replace(/^\d+\.\s/, ''))}</li>`);
+                    return;
+                }
+
+                closeList();
+                html.push(`<p>${renderInlineMarkdown(trimmed)}</p>`);
+            });
+
+            closeList();
+            return html.join('');
+        }
+
+        async function loadRulesPage() {
+            const container = document.getElementById('rules-content');
+
+            try {
+                const response = await fetch('CONTEST_RULES.md');
+                if (!response.ok) {
+                    throw new Error('Failed to load rules file');
+                }
+
+                const markdown = await response.text();
+                container.innerHTML = renderRulesMarkdown(markdown);
+            } catch (error) {
+                container.innerHTML = '<p class="rules-error">The rules could not be loaded right now.</p>';
+            }
+        }
+
+        loadRulesPage();
+    </script>
+</body>
+</html>
