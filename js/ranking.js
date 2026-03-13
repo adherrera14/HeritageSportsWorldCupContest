@@ -22,8 +22,8 @@ function updateRankingsSection() {
     // Build ranking interface
     section.innerHTML = `
         <h2 class="text-2xl font-bold mb-4">Assign Team Rankings</h2>
-        <div class="bg-blue-900 text-blue-100 p-4 rounded mb-4">
-            <p class="text-sm">Assign each team a ranking from 48 (best) to 1 (worst). Use each number only once.</p>
+        <div class="mb-4">
+            <p class="text-sm text-gray-300">Assign each team a ranking from 48 (best) to 1 (worst). Use each number only once.</p>
         </div>
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <h3 class="font-bold text-lg">Teams by Group</h3>
@@ -32,6 +32,7 @@ function updateRankingsSection() {
                 <p class="text-xs text-gray-400">Tap any team row to select a rank from available values.</p>
             </div>
         </div>
+        <div id="ranking-input-container" class="ranking-groups-grid mb-4"></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <button id="randomize-rankings-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-lg border border-indigo-500">
                 Randomize Rankings (1-48)
@@ -40,7 +41,6 @@ function updateRankingsSection() {
                 Clear All Rankings
             </button>
         </div>
-        <div id="ranking-input-container" class="ranking-groups-grid mb-6"></div>
         <button id="submit-rankings-btn" class="w-full bg-gray-600 text-gray-400 font-bold py-3 rounded-lg cursor-not-allowed" disabled>
             Submit Rankings (0/48 assigned)
         </button>

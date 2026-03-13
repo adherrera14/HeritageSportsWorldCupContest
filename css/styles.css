@@ -28,6 +28,27 @@ textarea {
     font-family: 'Kanit', sans-serif;
 }
 
+.site-sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    border-bottom: 1px solid rgba(212, 185, 97, 0.3);
+    background: linear-gradient(180deg, rgba(13, 15, 23, 0.98) 0%, rgba(7, 9, 15, 0.94) 100%);
+    backdrop-filter: blur(6px);
+}
+
+.site-sticky-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: clamp(14px, 3.1vw, 18px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #f3e4aa;
+}
+
 /* Navigation Styles */
 .nav-btn {
     cursor: pointer;
