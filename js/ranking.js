@@ -1,7 +1,6 @@
 // Ranking System - Direct Ranking Assignment (1-48)
 
 let userRankingAssignments = {}; // { teamId: rankingValue }
-let rankPickerModeEnabled = false;
 let activePickerTeamId = null;
 
 const RANK_MIN = 1;
@@ -30,10 +29,7 @@ function updateRankingsSection() {
             <h3 class="font-bold text-lg">Teams by Group</h3>
             <div class="flex flex-col items-start sm:items-end gap-2">
                 <div id="rankings-status-text" class="text-sm text-yellow-500">🎯 0/48 teams ranked</div>
-                <button id="toggle-rank-picker-btn" class="rank-picker-toggle" type="button" aria-pressed="false">
-                    Picker Mode: Off
-                </button>
-                <p id="rank-picker-mode-hint" class="text-xs text-gray-400 hidden">Tap any team row to open the full-screen rank picker.</p>
+                <p class="text-xs text-gray-400">Tap any team row to select a rank from available values.</p>
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
@@ -52,12 +48,16 @@ function updateRankingsSection() {
             <div class="rank-picker-sheet">
                 <div class="rank-picker-sheet-header">
                     <div>
-                        <p class="text-xs uppercase tracking-wide text-gray-400">Quick Rank Picker</p>
-                        <h3 id="rank-picker-team-name" class="text-xl font-bold text-white"></h3>
+                        <p class="rank-picker-kicker text-xs uppercase tracking-wide text-gray-400">Quick Rank Picker</p>
+                        <h3 id="rank-picker-team-name" class="rank-picker-title text-xl font-bold text-white"></h3>
                     </div>
                     <button id="close-rank-picker-btn" class="rank-picker-close-btn" type="button" aria-label="Close rank picker">×</button>
                 </div>
-                <p class="text-sm text-gray-300 mb-4">Tap an available rank to assign it. Used values are disabled.</p>
+                <p class="rank-picker-help-text text-sm text-gray-300 mb-4">Tap an available rank to assign it. Used values are disabled.</p>
+                <div class="rank-picker-meta" aria-live="polite">
+                    <span id="rank-picker-selected-chip" class="rank-picker-chip rank-picker-chip-selected">Selected: None</span>
+                    <span id="rank-picker-available-chip" class="rank-picker-chip">Available: 48</span>
+                </div>
                 <div id="rank-picker-options" class="rank-picker-options"></div>
                 <div class="rank-picker-actions">
                     <button id="clear-picked-rank-btn" class="rank-picker-secondary-btn" type="button">Clear Team Rank</button>
@@ -94,14 +94,10 @@ function updateRankingsSection() {
     const randomizeBtn = document.getElementById('randomize-rankings-btn');
     randomizeBtn.addEventListener('click', randomizeAllRankings);
 
-    const togglePickerBtn = document.getElementById('toggle-rank-picker-btn');
-    togglePickerBtn.addEventListener('click', toggleRankPickerMode);
-    
     // Update button status
     updateSubmitButtonStatus();
-    updateRankPickerToggleUI();
     
-    // Add change listeners to all inputs
+    // Add row listeners
     setupRankingInputListeners();
     setupRankPickerModalListeners();
 }
@@ -134,53 +130,42 @@ function createRankingInputRow(team) {
     const row = document.createElement('div');
     row.className = 'ranking-row flex items-center gap-3 bg-gray-700 p-3 rounded border border-gray-600';
     row.setAttribute('data-team-id', team.id);
+    row.setAttribute('role', 'button');
+    row.setAttribute('tabindex', '0');
     
     // Team flag and name
     const teamInfo = document.createElement('div');
     teamInfo.className = 'flex-1 min-w-0 flex items-center gap-2';
     teamInfo.innerHTML = `
         <span class="text-2xl">${team.flag}</span>
-        <span class="font-semibold team-name-text">${team.name}</span>
+        <span class="font-semibold team-name-text">${String(team.name || '').toUpperCase()}</span>
     `;
     
-    // Ranking input
-    const inputWrapper = document.createElement('div');
-    inputWrapper.className = 'flex items-center gap-2';
-    
-    const decrementBtn = document.createElement('button');
-    decrementBtn.type = 'button';
-    decrementBtn.className = 'rank-action-btn';
-    decrementBtn.setAttribute('data-team-id', team.id);
-    decrementBtn.setAttribute('data-delta', '-1');
-    decrementBtn.textContent = '-';
-    
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.min = String(RANK_MIN);
-    input.max = String(RANK_MAX);
-    input.placeholder = '-';
-    input.inputMode = 'numeric';
-    input.className = 'ranking-input w-14 sm:w-16 bg-gray-600 text-white text-center px-2 py-2 rounded border border-gray-500 focus:border-yellow-500 focus:outline-none text-base font-bold';
-    input.setAttribute('data-team-id', team.id);
-
-    const incrementBtn = document.createElement('button');
-    incrementBtn.type = 'button';
-    incrementBtn.className = 'rank-action-btn';
-    incrementBtn.setAttribute('data-team-id', team.id);
-    incrementBtn.setAttribute('data-delta', '1');
-    incrementBtn.textContent = '+';
-
-    // Set current value if exists
-    if (userRankingAssignments[team.id]) {
-        input.value = userRankingAssignments[team.id];
-    }
-    
-    inputWrapper.appendChild(decrementBtn);
-    inputWrapper.appendChild(input);
-    inputWrapper.appendChild(incrementBtn);
+    const rankDisplay = document.createElement('div');
+    rankDisplay.className = 'ranking-row-value';
+    rankDisplay.innerHTML = `
+        <span class="ranking-row-rank" data-team-rank="${team.id}">--</span>
+        <span class="ranking-row-hint ranking-row-hint-pick">
+            <span class="ranking-row-hint-icon" aria-hidden="true">
+                <svg class="ranking-row-hint-svg ranking-row-hint-svg-pick" viewBox="0 0 12 12" focusable="false" aria-hidden="true">
+                    <path d="M4 2 L8 6 L4 10" />
+                </svg>
+                <svg class="ranking-row-hint-svg ranking-row-hint-svg-edit" viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M3 11.5 L3.8 8.8 L10.6 2 L13.2 4.6 L6.4 11.4 Z" />
+                    <path d="M9.8 2.8 L12.4 5.4" />
+                </svg>
+            </span>
+            <span class="ranking-row-hint-label">Pick</span>
+        </span>
+    `;
     
     row.appendChild(teamInfo);
-    row.appendChild(inputWrapper);
+    row.appendChild(rankDisplay);
+
+    const assignedValue = userRankingAssignments[team.id] || null;
+    const rowLabelValue = assignedValue ? `Current rank ${assignedValue}` : 'No rank assigned';
+    row.setAttribute('aria-label', `${team.name}. ${rowLabelValue}. Activate to pick a rank.`);
+    setRankingRowValueState(row, assignedValue, false);
     
     return row;
 }
@@ -190,19 +175,18 @@ function setupRankingInputListeners() {
     const rows = document.querySelectorAll('.ranking-row');
     rows.forEach(row => {
         row.addEventListener('click', handleRankingRowClick);
+        row.addEventListener('keydown', handleRankingRowKeyDown);
     });
+}
 
-    const inputs = document.querySelectorAll('.ranking-input');
-    inputs.forEach(input => {
-        input.addEventListener('change', handleRankingInputChange);
-        input.addEventListener('input', handleRankingInputChange);
-    });
+function handleRankingRowKeyDown(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+        return;
+    }
 
-    const stepButtons = document.querySelectorAll('.rank-action-btn');
-    stepButtons.forEach(button => {
-        button.addEventListener('click', handleStepButtonClick);
-    });
-
+    e.preventDefault();
+    const teamId = e.currentTarget.getAttribute('data-team-id');
+    openRankPicker(teamId);
 }
 
 function setupRankPickerModalListeners() {
@@ -233,72 +217,8 @@ function setupRankPickerModalListeners() {
 }
 
 function handleRankingRowClick(e) {
-    if (!rankPickerModeEnabled) {
-        return;
-    }
-
-    const interactiveElement = e.target.closest('button, input');
-    if (interactiveElement) {
-        return;
-    }
-
     const teamId = e.currentTarget.getAttribute('data-team-id');
     openRankPicker(teamId);
-}
-
-// Handle Ranking Input Change
-function handleRankingInputChange(e) {
-    const teamId = e.target.getAttribute('data-team-id');
-    const value = e.target.value;
-    
-    if (value === '') {
-        delete userRankingAssignments[teamId];
-    } else {
-        const ranking = parseInt(value);
-        if (ranking >= RANK_MIN && ranking <= RANK_MAX) {
-            userRankingAssignments[teamId] = ranking;
-        } else {
-            e.target.value = '';
-            delete userRankingAssignments[teamId];
-        }
-    }
-    
-    updateSubmitButtonStatus();
-}
-
-function handleStepButtonClick(e) {
-    const teamId = e.currentTarget.getAttribute('data-team-id');
-    const delta = parseInt(e.currentTarget.getAttribute('data-delta'), 10);
-    const current = userRankingAssignments[teamId] || RANK_MIN;
-    const nextValue = Math.max(RANK_MIN, Math.min(RANK_MAX, current + delta));
-
-    userRankingAssignments[teamId] = nextValue;
-    syncInputValue(teamId, nextValue);
-    updateSubmitButtonStatus();
-}
-
-function toggleRankPickerMode() {
-    rankPickerModeEnabled = !rankPickerModeEnabled;
-    updateRankPickerToggleUI();
-    updateRankPickerRowHints();
-}
-
-function updateRankPickerToggleUI() {
-    const toggleBtn = document.getElementById('toggle-rank-picker-btn');
-    if (!toggleBtn) {
-        return;
-    }
-
-    toggleBtn.textContent = `Picker Mode: ${rankPickerModeEnabled ? 'On' : 'Off'}`;
-    toggleBtn.setAttribute('aria-pressed', rankPickerModeEnabled ? 'true' : 'false');
-    toggleBtn.classList.toggle('rank-picker-toggle-active', rankPickerModeEnabled);
-}
-
-function updateRankPickerRowHints() {
-    const hint = document.getElementById('rank-picker-mode-hint');
-    if (hint) {
-        hint.classList.toggle('hidden', !rankPickerModeEnabled);
-    }
 }
 
 function openRankPicker(teamId) {
@@ -312,7 +232,7 @@ function openRankPicker(teamId) {
         return;
     }
 
-    teamName.textContent = `${team.flag} ${team.name}`;
+    teamName.textContent = `${team.flag} ${String(team.name || '').toUpperCase()}`;
     renderRankPickerOptions(teamId);
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
@@ -334,6 +254,8 @@ function closeRankPicker() {
 
 function renderRankPickerOptions(teamId) {
     const optionsContainer = document.getElementById('rank-picker-options');
+    const selectedChip = document.getElementById('rank-picker-selected-chip');
+    const availableChip = document.getElementById('rank-picker-available-chip');
     if (!optionsContainer) {
         return;
     }
@@ -344,6 +266,15 @@ function renderRankPickerOptions(teamId) {
             .filter(([assignedTeamId]) => assignedTeamId !== teamId)
             .map(([, value]) => value)
     );
+
+    if (selectedChip) {
+        selectedChip.textContent = currentValue ? `Selected: ${currentValue}` : 'Selected: None';
+        selectedChip.classList.toggle('rank-picker-chip-empty', !currentValue);
+    }
+
+    if (availableChip) {
+        availableChip.textContent = `Available: ${RANK_MAX - usedByOtherTeams.size}`;
+    }
 
     optionsContainer.innerHTML = '';
 
@@ -391,10 +322,12 @@ function clearActivePickerTeamRank() {
 }
 
 function syncInputValue(teamId, value) {
-    const input = document.querySelector(`.ranking-input[data-team-id="${teamId}"]`);
-    if (input) {
-        input.value = String(value);
+    const row = document.querySelector(`.ranking-row[data-team-id="${teamId}"]`);
+    if (!row) {
+        return;
     }
+
+    setRankingRowValueState(row, value === '' ? null : value, false);
 }
 
 function clearAllRankings() {
@@ -431,11 +364,6 @@ function randomizeAllRankings() {
     });
 
     userRankingAssignments = randomizedAssignments;
-
-    document.querySelectorAll('.ranking-input').forEach(input => {
-        const teamId = input.getAttribute('data-team-id');
-        input.value = String(userRankingAssignments[teamId] || '');
-    });
 
     updateSubmitButtonStatus();
 }
@@ -514,27 +442,46 @@ function updateDuplicateIndicators() {
         valueCounts[value] = (valueCounts[value] || 0) + 1;
     });
 
-    const inputs = document.querySelectorAll('.ranking-input');
-    inputs.forEach(input => {
-        const teamId = input.getAttribute('data-team-id');
-        const row = input.closest('.ranking-row');
+    const rows = document.querySelectorAll('.ranking-row');
+    rows.forEach(row => {
+        const teamId = row.getAttribute('data-team-id');
         const value = userRankingAssignments[teamId];
         const isDuplicate = value && valueCounts[value] > 1;
 
-        if (isDuplicate) {
-            input.classList.add('border-red-500');
-            input.classList.remove('border-gray-500');
-            if (row) {
-                row.classList.add('ranking-row-duplicate');
-            }
-        } else {
-            input.classList.remove('border-red-500');
-            input.classList.add('border-gray-500');
-            if (row) {
-                row.classList.remove('ranking-row-duplicate');
-            }
-        }
+        setRankingRowValueState(row, value || null, isDuplicate);
     });
+}
+
+function setRankingRowValueState(row, value, isDuplicate) {
+    if (!row) {
+        return;
+    }
+
+    const rankBadge = row.querySelector('.ranking-row-rank');
+    const hint = row.querySelector('.ranking-row-hint');
+    const hintLabel = row.querySelector('.ranking-row-hint-label');
+    const hasValue = Number.isInteger(value);
+    const teamName = row.querySelector('.team-name-text')?.textContent || 'Team';
+
+    if (rankBadge) {
+        rankBadge.textContent = hasValue ? String(value) : '--';
+        rankBadge.classList.toggle('ranking-row-rank-assigned', hasValue && !isDuplicate);
+        rankBadge.classList.toggle('ranking-row-rank-empty', !hasValue);
+        rankBadge.classList.toggle('ranking-row-rank-duplicate', !!isDuplicate);
+    }
+
+    if (hint && hintLabel) {
+        hintLabel.textContent = hasValue ? 'Edit' : 'Pick';
+        hint.classList.toggle('ranking-row-hint-edit', hasValue);
+        hint.classList.toggle('ranking-row-hint-pick', !hasValue);
+    }
+
+    row.setAttribute(
+        'aria-label',
+        `${teamName}. ${hasValue ? `Current rank ${value}` : 'No rank assigned'}. Activate to ${hasValue ? 'edit' : 'pick'} rank.`
+    );
+
+    row.classList.toggle('ranking-row-duplicate', !!isDuplicate);
 }
 
 // Submit Rankings

@@ -85,7 +85,7 @@ function createMatchCard(match, index) {
     
     // Away Team
     const awayTeam = document.createElement('div');
-    awayTeam.className = 'team-info';
+    awayTeam.className = 'team-info team-info-away';
     awayTeam.innerHTML = `
         <span class="flex-1 text-right">${getKnockoutTeamDisplayNameWithRank(match.away)}</span>
         <span class="team-flag-large">${match.away.flag}</span>

@@ -78,10 +78,23 @@ function getAssignedRankForTeam(teamId, teamName) {
 function createGroupCard(groupName, standings) {
     const container = document.createElement('div');
     container.className = 'group-card card';
-    
+
+    const header = document.createElement('div');
+    header.className = 'group-card-header';
+
     const title = document.createElement('div');
     title.className = 'group-title';
     title.textContent = `Group ${groupName}`;
+
+    const totalPointsBox = document.createElement('div');
+    totalPointsBox.className = 'group-total-points';
+    totalPointsBox.innerHTML = `
+        <span class="group-total-label">Points:</span>
+        <span class="group-total-value">0</span>
+    `;
+
+    header.appendChild(title);
+    header.appendChild(totalPointsBox);
     
     const table = document.createElement('table');
     table.className = 'standings-table';
@@ -101,10 +114,12 @@ function createGroupCard(groupName, standings) {
     
     // Table Body
     const tbody = document.createElement('tbody');
+    let groupContestTotal = 0;
     standings.forEach((team) => {
         const { teamId, teamName, teamFlag } = resolveTeamMeta(team);
         const assignedRank = getAssignedRankForTeam(teamId, teamName);
         const contestPoints = (team.wins || 0) * assignedRank;
+        groupContestTotal += contestPoints;
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -122,8 +137,13 @@ function createGroupCard(groupName, standings) {
         tbody.appendChild(row);
     });
     table.appendChild(tbody);
+
+    const totalValue = totalPointsBox.querySelector('.group-total-value');
+    if (totalValue) {
+        totalValue.textContent = String(groupContestTotal);
+    }
     
-    container.appendChild(title);
+    container.appendChild(header);
     container.appendChild(table);
     
     return container;

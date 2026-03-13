@@ -167,6 +167,38 @@ textarea {
     color: var(--highlight);
 }
 
+.group-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.group-card-header .group-title {
+    margin-bottom: 0;
+}
+
+.group-total-points {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.group-total-label {
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.group-total-value {
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--highlight);
+}
+
 .standings-table {
     width: 100%;
     font-size: 14px;
@@ -206,8 +238,8 @@ textarea {
 }
 
 .team-name-text {
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: normal;
+    word-break: normal;
 }
 
 .team-flag-large {
@@ -244,6 +276,10 @@ textarea {
     min-width: 0;
     font-size: 19px;
     font-weight: 700;
+}
+
+.team-info-away {
+    justify-content: flex-end;
 }
 
 .vs-badge {
@@ -311,6 +347,9 @@ textarea {
 }
 
 .winner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background-color: rgba(34, 197, 94, 0.2);
     color: #22c55e;
     padding: 6px 12px;
@@ -456,6 +495,147 @@ textarea {
     min-height: 100%;
 }
 
+.ranking-row {
+    cursor: pointer;
+    transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ranking-row:hover {
+    border-color: rgba(212, 185, 97, 0.6);
+    background-color: rgba(73, 82, 97, 0.92);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.26);
+}
+
+.ranking-row:focus-visible {
+    outline: none;
+    border-color: rgba(212, 185, 97, 0.9);
+    box-shadow: 0 0 0 2px rgba(212, 185, 97, 0.25), 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.ranking-row-value {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex: 0 0 auto;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 185, 97, 0.35);
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.2) 0%, rgba(212, 185, 97, 0.1) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+}
+
+.ranking-row-rank {
+    min-width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 0;
+    padding: 0 11px;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    border: 0;
+    border-right: 1px solid rgba(212, 185, 97, 0.38);
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.24) 0%, rgba(212, 185, 97, 0.12) 100%);
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.ranking-row-rank-empty {
+    color: #ffffff;
+}
+
+.ranking-row-rank-assigned {
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.34) 0%, rgba(212, 185, 97, 0.16) 100%);
+    color: #ffffff;
+}
+
+.ranking-row-rank-duplicate {
+    background: linear-gradient(180deg, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0.16) 100%);
+    color: #ffffff;
+}
+
+.ranking-row-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 62px;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0;
+    padding: 0 10px;
+    border: 0;
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.28) 0%, rgba(212, 185, 97, 0.16) 100%);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ranking-row-hint-label {
+    line-height: 1;
+    font-weight: 100;
+}
+
+.ranking-row-hint-icon {
+    width: 12px;
+    height: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 12px;
+    transition: transform 0.15s ease;
+}
+
+.ranking-row:hover .ranking-row-hint-icon,
+.ranking-row:focus-visible .ranking-row-hint-icon {
+    transform: translateX(1px);
+}
+
+.ranking-row-hint-svg {
+    width: 100%;
+    height: 100%;
+    display: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ranking-row-hint-svg-edit {
+    stroke-width: 1.8;
+}
+
+.ranking-row-hint-pick .ranking-row-hint-svg-pick {
+    display: block;
+}
+
+.ranking-row-hint-edit .ranking-row-hint-svg-edit {
+    display: block;
+}
+
+.ranking-row-hint-pick {
+    color: #f8e9b8;
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.32) 0%, rgba(212, 185, 97, 0.2) 100%);
+}
+
+.ranking-row-hint-edit {
+    color: #ffe9a3;
+    background: linear-gradient(180deg, rgba(212, 185, 97, 0.5) 0%, rgba(212, 185, 97, 0.34) 100%);
+}
+
+.ranking-row-duplicate .ranking-row-hint {
+    color: #fecaca;
+    background: linear-gradient(180deg, rgba(127, 29, 29, 0.5) 0%, rgba(127, 29, 29, 0.34) 100%);
+}
+
 .rank-action-btn {
     width: 40px;
     height: 40px;
@@ -508,13 +688,55 @@ textarea {
 .rank-picker-sheet {
     width: 100%;
     max-width: 720px;
-    max-height: min(88vh, 920px);
-    overflow: auto;
-    background: linear-gradient(180deg, rgba(32, 36, 46, 0.98) 0%, rgba(18, 20, 29, 0.98) 100%);
+    max-height: 92dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(33, 38, 52, 0.98) 0%, rgba(16, 18, 27, 0.98) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px 20px 0 0;
-    padding: 20px;
+    padding: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.rank-picker-help-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 10px;
+}
+
+.rank-picker-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.rank-picker-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.rank-picker-chip-selected {
+    color: #ffe9a3;
+    background-color: rgba(212, 185, 97, 0.2);
+    border-color: rgba(212, 185, 97, 0.52);
+}
+
+.rank-picker-chip-empty {
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(156, 163, 175, 0.2);
+    border-color: rgba(156, 163, 175, 0.45);
 }
 
 .rank-picker-sheet-header {
@@ -522,34 +744,63 @@ textarea {
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+}
+
+.rank-picker-kicker {
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+}
+
+.rank-picker-title {
+    font-size: clamp(18px, 2.7vw, 24px);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin: 0;
 }
 
 .rank-picker-close-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border: 0;
     border-radius: 999px;
     background-color: rgba(255, 255, 255, 0.08);
     color: white;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1;
 }
 
 .rank-picker-options {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 2px;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .rank-picker-option {
-    min-height: 56px;
-    border-radius: 12px;
+    min-height: 40px;
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     background-color: rgba(255, 255, 255, 0.05);
     color: white;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 800;
+    transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.rank-picker-option:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+.rank-picker-option:not(:disabled):hover {
+    border-color: rgba(212, 185, 97, 0.5);
+    background-color: rgba(212, 185, 97, 0.12);
 }
 
 .rank-picker-option-current {
@@ -566,16 +817,26 @@ textarea {
 .rank-picker-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 16px;
+    gap: 10px;
+    margin-top: 12px;
+    position: relative;
 }
 
 .rank-picker-primary-btn,
 .rank-picker-secondary-btn {
-    min-height: 48px;
-    border-radius: 12px;
+    min-height: 44px;
+    border-radius: 10px;
     font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.01em;
     border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.rank-picker-primary-btn:active,
+.rank-picker-secondary-btn:active {
+    transform: translateY(1px);
+    filter: brightness(0.95);
 }
 
 .rank-picker-primary-btn {
@@ -600,6 +861,10 @@ body.rank-picker-open {
 @media (min-width: 768px) {
     .ranking-groups-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rank-picker-options {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 }
 
@@ -627,6 +892,57 @@ body.rank-picker-open {
         padding: 6px 4px;
     }
 
+    .group-card-header {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .group-total-points {
+        gap: 4px;
+    }
+
+    .group-total-label {
+        font-size: 11px;
+    }
+
+    .group-total-value {
+        font-size: 17px;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        padding: 5px 2px;
+    }
+
+    .standings-table th:nth-child(2),
+    .standings-table th:nth-child(3),
+    .standings-table th:nth-child(4),
+    .standings-table td:nth-child(2),
+    .standings-table td:nth-child(3),
+    .standings-table td:nth-child(4) {
+        width: 28px !important;
+    }
+
+    .standings-table th:nth-child(5),
+    .standings-table td:nth-child(5) {
+        width: 56px !important;
+    }
+
+    .team-name {
+        gap: 6px;
+    }
+
+    .team-name .team-flag-large {
+        font-size: 16px;
+        flex: 0 0 auto;
+    }
+
+    .team-name-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .match-teams {
         flex-direction: column;
         gap: 8px;
@@ -637,17 +953,132 @@ body.rank-picker-open {
         justify-content: center;
     }
 
+    .team-info-away {
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+
     .match-teams .team-info .flex-1,
     .match-teams .team-info .text-right {
         flex: 0 1 auto;
         text-align: center;
     }
 
+    .ranking-row-rank {
+        min-width: 42px;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+
+    .ranking-row-hint {
+        min-width: 54px;
+        font-size: 10px;
+        padding: 0 8px;
+        gap: 4px;
+    }
+
+    .ranking-row-value {
+        height: 32px;
+    }
+
+    .ranking-row-hint-icon {
+        width: 10px;
+        height: 10px;
+        flex-basis: 10px;
+    }
+
+    .rank-picker-modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .rank-picker-sheet {
+        max-height: 100dvh;
+        min-height: 100dvh;
+        padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+        border-radius: 14px 14px 0 0;
+    }
+
+    .rank-picker-sheet-header {
+        margin-bottom: 4px;
+    }
+
+    .rank-picker-kicker {
+        font-size: 10px;
+        margin-bottom: 2px;
+    }
+
+    .rank-picker-title {
+        font-size: 17px;
+        line-height: 1.15;
+    }
+
+    .rank-picker-help-text {
+        font-size: 11px;
+        line-height: 1.35;
+        margin-bottom: 8px;
+    }
+
+    .rank-picker-meta {
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+
+    .rank-picker-chip {
+        font-size: 11px;
+        padding: 3px 9px;
+    }
+
     .rank-picker-options {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 6px;
+        padding-right: 1px;
+    }
+
+    .rank-picker-option {
+        min-height: 34px;
+        font-size: 13px;
+        border-radius: 8px;
     }
 
     .rank-picker-actions {
         grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, rgba(16, 18, 27, 0.4) 0%, rgba(16, 18, 27, 0.94) 45%);
+    }
+
+    .rank-picker-primary-btn,
+    .rank-picker-secondary-btn {
+        min-height: 38px;
+        font-size: 13px;
+        border-radius: 9px;
+    }
+
+    .rank-picker-close-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 390px) {
+    .rank-picker-title {
+        font-size: 16px;
+    }
+
+    .rank-picker-help-text {
+        font-size: 10px;
+    }
+
+    .rank-picker-options {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .rank-picker-option {
+        min-height: 32px;
+        font-size: 12px;
     }
 }
