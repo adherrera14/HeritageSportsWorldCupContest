@@ -28,112 +28,92 @@
     <main class="site-page-shell">
         <div class="max-w-4xl mx-auto px-4 py-6 rules-layout">
             <section class="rules-card" aria-live="polite">
-                <div id="rules-content" class="rules-content">
-                    <p class="rules-loading">Loading contest rules...</p>
+                <div class="rules-content">
+                    <h1>Contest Rules</h1>
+
+                    <p>This guide explains the basic format of the contest for a new player.</p>
+
+                    <h2>Overview</h2>
+
+                    <p>Before the tournament starts, each player ranks all 48 World Cup teams from strongest to weakest.</p>
+
+                    <ul>
+                        <li><code>48</code> = the team you believe is the strongest</li>
+                        <li><code>1</code> = the team you believe is the weakest</li>
+                    </ul>
+
+                    <p>As matches are played, you earn points when the teams you backed win.</p>
+
+                    <h2>How To Enter</h2>
+
+                    <ol>
+                        <li>Review all 48 teams.</li>
+                        <li>Assign every team one unique ranking value from <code>48</code> down to <code>1</code>.</li>
+                        <li>Use each number only once.</li>
+                        <li>Submit your rankings before the tournament begins.</li>
+                    </ol>
+
+                    <p>Once your rankings are submitted, they are locked and cannot be changed.</p>
+
+                    <h2>Scoring</h2>
+
+                    <p>You score points based on the ranking number you assigned to a team.</p>
+
+                    <ul>
+                        <li>If your team wins a match, you earn that team's ranking value in points.</li>
+                        <li>If a match ends in a draw, you earn <code>0</code> points for that match.</li>
+                        <li>If your team loses, you earn <code>0</code> points for that match.</li>
+                    </ul>
+
+                    <h3>Example</h3>
+
+                    <ul>
+                        <li>You rank Brazil as <code>48</code>.</li>
+                        <li>Brazil wins a match.</li>
+                        <li>You earn <code>48</code> points.</li>
+                    </ul>
+
+                    <p>If that same team keeps winning later in the tournament, you keep earning that same ranking value for each win.</p>
+
+                    <h2>Tournament Progression</h2>
+
+                    <p>The contest follows the tournament from start to finish:</p>
+
+                    <ol>
+                        <li>Pre-Tournament</li>
+                        <li>Group Stage - Matchday 1</li>
+                        <li>Group Stage - Matchday 2</li>
+                        <li>Group Stage - Matchday 3</li>
+                        <li>Round of 32</li>
+                        <li>Round of 16</li>
+                        <li>Quarterfinal</li>
+                        <li>Semifinal</li>
+                        <li>Final</li>
+                    </ol>
+
+                    <p>Your total score continues to build throughout the event as long as your ranked teams keep winning.</p>
+
+                    <h2>Strategy Notes</h2>
+
+                    <ul>
+                        <li>Giving a team a high number increases the points you earn if that team wins.</li>
+                        <li>Because each number can only be used once, every ranking decision matters.</li>
+                        <li>Picking the eventual deep tournament runners correctly can create a large scoring advantage.</li>
+                    </ul>
+
+                    <h2>Quick Summary</h2>
+
+                    <ul>
+                        <li>Rank all 48 teams from <code>48</code> to <code>1</code></li>
+                        <li>Every number must be unique</li>
+                        <li>Submit once before the tournament starts</li>
+                        <li>Rankings lock after submission</li>
+                        <li>Points are awarded only for wins</li>
+                        <li>Total score is the sum of all points earned across the tournament</li>
+                    </ul>
                 </div>
             </section>
         </div>
     </main>
-
-    <script>
-        function escapeHtml(value) {
-            return value
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
-        }
-
-        function renderInlineMarkdown(text) {
-            return escapeHtml(text).replace(/`([^`]+)`/g, '<code>$1</code>');
-        }
-
-        function renderRulesMarkdown(markdown) {
-            const lines = markdown.split(/\r?\n/);
-            const html = [];
-            let listType = null;
-
-            function closeList() {
-                if (listType) {
-                    html.push(`</${listType}>`);
-                    listType = null;
-                }
-            }
-
-            lines.forEach((line) => {
-                const trimmed = line.trim();
-
-                if (!trimmed) {
-                    closeList();
-                    return;
-                }
-
-                if (trimmed.startsWith('# ')) {
-                    closeList();
-                    html.push(`<h1>${renderInlineMarkdown(trimmed.slice(2))}</h1>`);
-                    return;
-                }
-
-                if (trimmed.startsWith('## ')) {
-                    closeList();
-                    html.push(`<h2>${renderInlineMarkdown(trimmed.slice(3))}</h2>`);
-                    return;
-                }
-
-                if (trimmed.startsWith('### ')) {
-                    closeList();
-                    html.push(`<h3>${renderInlineMarkdown(trimmed.slice(4))}</h3>`);
-                    return;
-                }
-
-                if (trimmed.startsWith('- ')) {
-                    if (listType !== 'ul') {
-                        closeList();
-                        listType = 'ul';
-                        html.push('<ul>');
-                    }
-
-                    html.push(`<li>${renderInlineMarkdown(trimmed.slice(2))}</li>`);
-                    return;
-                }
-
-                if (/^\d+\.\s/.test(trimmed)) {
-                    if (listType !== 'ol') {
-                        closeList();
-                        listType = 'ol';
-                        html.push('<ol>');
-                    }
-
-                    html.push(`<li>${renderInlineMarkdown(trimmed.replace(/^\d+\.\s/, ''))}</li>`);
-                    return;
-                }
-
-                closeList();
-                html.push(`<p>${renderInlineMarkdown(trimmed)}</p>`);
-            });
-
-            closeList();
-            return html.join('');
-        }
-
-        async function loadRulesPage() {
-            const container = document.getElementById('rules-content');
-
-            try {
-                const response = await fetch('CONTEST_RULES.md');
-                if (!response.ok) {
-                    throw new Error('Failed to load rules file');
-                }
-
-                const markdown = await response.text();
-                container.innerHTML = renderRulesMarkdown(markdown);
-            } catch (error) {
-                container.innerHTML = '<p class="rules-error">The rules could not be loaded right now.</p>';
-            }
-        }
-
-        loadRulesPage();
-    </script>
 </body>
 </html>
