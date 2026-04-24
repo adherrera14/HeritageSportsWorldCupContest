@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Database Integration Guide</title>
+    <style>
+        :root {
+            --bg: #f4f1ea;
+            --surface: #fffdf9;
+            --ink: #1f2937;
+            --muted: #5b6473;
+            --accent: #0f766e;
+            --accent-2: #b45309;
+            --line: #ddd3c3;
+            --ok: #166534;
+            --warn: #92400e;
+            --danger: #991b1b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Kanit", "Segoe UI", Tahoma, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 0%, rgba(15, 118, 110, 0.12), transparent 35%),
+                radial-gradient(circle at 90% 20%, rgba(180, 83, 9, 0.10), transparent 32%),
+                var(--bg);
+            line-height: 1.55;
+        }
+
+        .shell {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px 56px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #134e4a, #115e59 50%, #0f766e);
+            color: #f0fdfa;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(15, 118, 110, 0.28);
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            margin: 0;
+            color: rgba(240, 253, 250, 0.9);
+        }
+
+        .meta {
+            margin-top: 14px;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .grid {
+            display: grid;
+            gap: 14px;
+            margin-top: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 8px 20px rgba(31, 41, 55, 0.06);
+        }
+
+        h2 {
+            margin: 30px 0 10px;
+            font-size: 1.35rem;
+            color: #0b3f3b;
+        }
+
+        h3 {
+            margin: 18px 0 8px;
+            font-size: 1.05rem;
+            color: #1f2937;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul, ol {
+            margin: 8px 0 12px;
+            padding-left: 20px;
+        }
+
+        code {
+            background: #f3ece0;
+            border: 1px solid #e8dece;
+            border-radius: 6px;
+            padding: 1px 6px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.92em;
+        }
+
+        pre {
+            background: #12202b;
+            color: #e2e8f0;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            overflow-x: auto;
+            padding: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .label {
+            display: inline-block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 999px;
+            padding: 3px 10px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            border: 1px solid;
+        }
+
+        .ok { background: #ecfdf3; color: var(--ok); border-color: #86efac; }
+        .warn { background: #fffbeb; color: var(--warn); border-color: #fcd34d; }
+        .danger { background: #fef2f2; color: var(--danger); border-color: #fca5a5; }
+
+        .step {
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            margin-bottom: 14px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            text-align: left;
+            border: 1px solid #e9e1d4;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f5efe4;
+        }
+
+        .footer {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <h1>World Cup Contest Production Database Integration Guide</h1>
+            <p>Easy-to-follow implementation plan to move from static JSON and browser storage to a secure production architecture.</p>
+            <p class="meta">Scope: Contest app and leaderboard only. The current admin page is demo-only and must not be part of production deployment.</p>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h3>Current State (Reviewed)</h3>
+                <ul>
+                    <li>Frontend loads data from <code>data/*.json</code> and computes scoring in browser JavaScript.</li>
+                    <li>User picks and lock status are saved in <code>localStorage</code>.</li>
+                    <li>Tournament stage is also controlled from <code>localStorage</code>.</li>
+                    <li>Leaderboard entries are seeded from static JSON, then recalculated client-side.</li>
+                </ul>
+            </article>
+            <article class="card">
+                <h3>Production Goals</h3>
+                <ul>
+                    <li>Single source of truth in database.</li>
+                    <li>Server-side scoring and leaderboard calculations.</li>
+                    <li>Authenticated user picks with audit trail.</li>
+                    <li>Internal dev-team workflow for score and stage updates.</li>
+                </ul>
+            </article>
+            <article class="card">
+                <h3>Non-Negotiables</h3>
+                <p><span class="label danger">Important</span> Do not deploy <code>admin.html</code> to production.</p>
+                <p>Score administration and tournament progression must be done by the dev team through backend-controlled processes.</p>
+            </article>
+        </section>
+
+        <section>
+            <h2>1) Target Architecture</h2>
+            <div class="card">
+                <ul>
+                    <li>Frontend: existing pages consume REST endpoints instead of JSON files.</li>
+                    <li>Backend API: authentication, picks, stage data, results, leaderboard endpoints.</li>
+                    <li>Database: PostgreSQL recommended for transactional consistency and strong query support.</li>
+                    <li>Jobs/Workers: optional for periodic leaderboard snapshots and cache invalidation.</li>
+                    <li>Ops: deploy frontend and API separately, protect internal update routes.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>2) Data Model Blueprint</h2>
+            <div class="card table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Table</th>
+                            <th>Purpose</th>
+                            <th>Core Columns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>teams</code></td>
+                            <td>Master list of 48 teams</td>
+                            <td><code>id</code>, <code>code</code>, <code>name</code>, <code>group_code</code>, <code>is_active</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>tournament_stages</code></td>
+                            <td>Stage definitions and active stage</td>
+                            <td><code>id</code>, <code>stage_key</code>, <code>display_name</code>, <code>sequence</code>, <code>is_current</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>matches</code></td>
+                            <td>Official match results per stage</td>
+                            <td><code>id</code>, <code>stage_id</code>, <code>home_team_id</code>, <code>away_team_id</code>, <code>winner_side</code>, <code>home_score</code>, <code>away_score</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>users</code></td>
+                            <td>Contest participants</td>
+                            <td><code>id</code>, <code>email</code>, <code>username</code>, <code>created_at</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>user_picks</code></td>
+                            <td>One rank value per team per user</td>
+                            <td><code>id</code>, <code>user_id</code>, <code>team_id</code>, <code>rank_value</code>, <code>locked_at</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>score_events</code></td>
+                            <td>Immutable scoring events</td>
+                            <td><code>id</code>, <code>user_id</code>, <code>match_id</code>, <code>team_id</code>, <code>points_awarded</code>, <code>created_at</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>leaderboard_snapshots</code></td>
+                            <td>Fast read model by stage</td>
+                            <td><code>id</code>, <code>stage_id</code>, <code>user_id</code>, <code>total_points</code>, <code>rank</code>, <code>calculated_at</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>audit_logs</code></td>
+                            <td>Track dev-team score updates</td>
+                            <td><code>id</code>, <code>actor</code>, <code>action</code>, <code>payload_json</code>, <code>created_at</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>3) JSON-to-Database Mapping</h2>
+            <div class="card">
+                <ul>
+                    <li><code>data/teams.json</code> -> seed <code>teams</code>.</li>
+                    <li><code>data/stage-*.json</code> -> seed <code>tournament_stages</code> and <code>matches</code>.</li>
+                    <li><code>data/leaderboard.json</code> -> optional bootstrap for historical display; production leaderboard should come from computed data, not static seed.</li>
+                    <li>Browser <code>localStorage</code> values -> migrate to <code>user_picks</code> and authenticated session state.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>4) API Contract (Recommended)</h2>
+            <div class="card">
+                <h3>Public/User Endpoints</h3>
+                <ul>
+                    <li><code>GET /api/v1/teams</code></li>
+                    <li><code>GET /api/v1/stages/current</code></li>
+                    <li><code>GET /api/v1/stages/{stageId}/matches</code></li>
+                    <li><code>GET /api/v1/leaderboard?stageId={id}&amp;limit=20</code></li>
+                    <li><code>GET /api/v1/me/picks</code></li>
+                    <li><code>PUT /api/v1/me/picks</code></li>
+                    <li><code>POST /api/v1/me/picks/lock</code></li>
+                </ul>
+
+                <h3>Internal Dev-Team Endpoints (Protected)</h3>
+                <ul>
+                    <li><code>POST /internal/v1/stages/{stageId}/activate</code></li>
+                    <li><code>POST /internal/v1/matches/{matchId}/result</code></li>
+                    <li><code>POST /internal/v1/leaderboard/rebuild</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>5) Scoring Logic Placement</h2>
+            <div class="card">
+                <p><span class="label warn">Rule</span> Scoring must run on the server only.</p>
+                <ul>
+                    <li>For each completed match, determine winner side: <code>home</code>, <code>away</code>, or <code>draw</code>.</li>
+                    <li>If draw: award <code>0</code> points to all users for that match.</li>
+                    <li>If winner exists: add that winner team rank value from <code>user_picks.rank_value</code> to each user total.</li>
+                    <li>Persist each calculation as a <code>score_events</code> row for traceability.</li>
+                    <li>Recompute or incrementally update <code>leaderboard_snapshots</code>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>6) Step-by-Step Implementation Plan</h2>
+            <div class="card">
+                <div class="step">
+                    <h3>Step 1: Baseline and Freeze</h3>
+                    <ol>
+                        <li>Freeze JSON schema and validate current scoring outputs as reference fixtures.</li>
+                        <li>Document exact stage names and IDs currently used by the frontend.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 2: Create Database and Migrations</h3>
+                    <ol>
+                        <li>Create migrations for core tables listed above.</li>
+                        <li>Add unique constraints: one pick per <code>(user_id, team_id)</code>, one rank value per <code>(user_id, rank_value)</code>.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 3: Write Seed/Import Scripts</h3>
+                    <ol>
+                        <li>Import teams and stage results from existing JSON files.</li>
+                        <li>Backfill sample users only in non-production environments.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 4: Implement API and Auth</h3>
+                    <ol>
+                        <li>Add user authentication (session or JWT).</li>
+                        <li>Implement picks endpoints and lock endpoint with server-side validation.</li>
+                        <li>Add internal-only endpoints for stage and match result updates.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 5: Move Scoring to Backend</h3>
+                    <ol>
+                        <li>Port scoring rules from frontend logic to service layer.</li>
+                        <li>Add deterministic tests against known stage fixtures.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 6: Frontend Refactor</h3>
+                    <ol>
+                        <li>Replace all <code>fetch('data/*.json')</code> calls with API calls.</li>
+                        <li>Remove <code>localStorage</code> as source of truth (keep only non-critical UI preferences if needed).</li>
+                        <li>Keep existing UI and contest rules intact while switching data source.</li>
+                    </ol>
+                </div>
+                <div class="step">
+                    <h3>Step 7: Deploy and Cutover</h3>
+                    <ol>
+                        <li>Run dual-read in staging: compare API responses against JSON behavior.</li>
+                        <li>Enable production feature flag for database mode.</li>
+                        <li>Disable JSON endpoints/assets for runtime logic after verification.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>7) Example SQL Constraints</h2>
+            <div class="card">
+<pre>-- One rank per team for a user
+CREATE UNIQUE INDEX ux_user_picks_user_team
+ON user_picks (user_id, team_id);
+
+-- One unique rank value (1..48) per user
+CREATE UNIQUE INDEX ux_user_picks_user_rank
+ON user_picks (user_id, rank_value);
+
+-- Optional safety check
+ALTER TABLE user_picks
+ADD CONSTRAINT chk_rank_value_range CHECK (rank_value BETWEEN 1 AND 48);</pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>8) Security and Operations Checklist</h2>
+            <div class="card">
+                <p><span class="label ok">Required</span> Minimum production readiness checklist:</p>
+                <ul>
+                    <li>Protect internal endpoints with role-based access control and IP allow-list if possible.</li>
+                    <li>Use parameterized SQL/ORM protections to prevent injection.</li>
+                    <li>Add DB backups and restore drill process.</li>
+                    <li>Enable structured logs for match updates and score recalculations.</li>
+                    <li>Add monitoring for API latency, DB connections, and failed scoring jobs.</li>
+                    <li>Use migrations in CI/CD, never manual schema changes in production.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>9) High-Risk Areas Found in Current Implementation</h2>
+            <div class="card">
+                <ul>
+                    <li>Client-side scoring and stage control can be manipulated by editing browser storage.</li>
+                    <li>Leaderboard values are not authoritative because they are recalculated in the browser.</li>
+                    <li>Inline scripts and static data files make auditability and access control difficult.</li>
+                </ul>
+            </div>
+        </section>
+
+        <p class="footer">Document prepared for developer implementation planning. Update this guide after API routes and final schema are approved.</p>
+    </main>
+</body>
+</html>
